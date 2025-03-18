@@ -1,0 +1,1268 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ONO Academic College - Lecturer Dashboard</title>
+  <style>
+    :root {
+      --primary: #508e38;
+      --primary-light: #76b159;
+      --primary-dark: #3c6c29;
+      --secondary: #3563cf;
+      --secondary-light: #5178d8;
+      --secondary-dark: #2a4ea6;
+      --accent: #e74c3c;
+      --light: #f8f9fa;
+      --dark: #212529;
+      --gray: #6c757d;
+      --gray-light: #e9ecef;
+      --gray-dark: #495057;
+      --warning: #f39c12;
+      --danger: #dc3545;
+      --success: #28a745;
+      --info: #17a2b8;
+      --bg-white: #ffffff;
+      --border-color: #dee2e6;
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.1);
+      --shadow: 0 4px 6px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.12);
+      --shadow-lg: 0 10px 15px rgba(0,0,0,0.1), 0 4px 6px rgba(0,0,0,0.08);
+      --radius: 6px;
+      --radius-lg: 10px;
+      --transition: all 0.25s ease;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
+    }
+
+    body {
+      background-color: var(--light);
+      color: var(--dark);
+      line-height: 1.6;
+      font-size: 16px;
+    }
+
+    a {
+      text-decoration: none;
+      color: var(--secondary);
+      font-weight: 500;
+    }
+
+    header {
+      background-color: white;
+      box-shadow: var(--shadow);
+      padding: 0.75rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .logo {
+      height: 50px;
+    }
+
+    .user-menu {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.5rem 0.75rem;
+      border-radius: var(--radius);
+      transition: var(--transition);
+      cursor: pointer;
+    }
+
+    .user-avatar {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background-color: var(--secondary);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+
+    .user-details {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .user-name {
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    .user-role {
+      font-size: 0.8rem;
+      color: var(--gray);
+    }
+
+    .icon-button {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: var(--transition);
+      position: relative;
+      background-color: transparent;
+    }
+
+    .icon-button:hover {
+      background-color: var(--gray-light);
+    }
+
+    nav {
+      background-color: white;
+      padding: 0 2rem;
+      border-bottom: 1px solid var(--gray-light);
+    }
+
+    .nav-container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 0.5rem;
+      overflow-x: auto;
+      padding: 0.5rem 0;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--dark);
+      font-weight: 500;
+      padding: 0.75rem 1rem;
+      display: block;
+      border-radius: var(--radius);
+      transition: var(--transition);
+      white-space: nowrap;
+    }
+
+    .nav-links a:hover {
+      background-color: var(--gray-light);
+      color: var(--primary);
+    }
+
+    .nav-links a.active {
+      background-color: var(--primary-light);
+      color: var(--primary-dark);
+    }
+
+    main {
+      padding: 2rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .breadcrumbs {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1.25rem;
+      color: var(--gray);
+      font-size: 0.95rem;
+      align-items: center;
+      background-color: var(--bg-white);
+      padding: 0.75rem 1rem;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .breadcrumbs a {
+      color: var(--secondary);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .breadcrumbs a:hover {
+      color: var(--primary);
+      text-decoration: underline;
+    }
+
+    .page-header {
+      margin-bottom: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .page-title {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--dark);
+      border-bottom: 3px solid var(--primary);
+      padding-bottom: 0.5rem;
+      display: inline-block;
+    }
+
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 2rem;
+    }
+
+    .sidebar {
+      grid-column: 1;
+    }
+
+    .main-content {
+      grid-column: 2;
+    }
+
+    .card {
+      background-color: var(--bg-white);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      margin-bottom: 1.5rem;
+      transition: var(--transition);
+      border: 1px solid var(--border-color);
+    }
+
+    .card:hover {
+      box-shadow: var(--shadow-lg);
+    }
+
+    .card-header {
+      padding: 1.25rem;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: white;
+    }
+
+    .card-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .card-body {
+      padding: 1.5rem;
+    }
+
+    .btn {
+      padding: 0.6rem 1.25rem;
+      border: none;
+      border-radius: var(--radius);
+      cursor: pointer;
+      font-weight: 500;
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.95rem;
+    }
+
+    .btn-primary {
+      background-color: var(--primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background-color: var(--primary-dark);
+    }
+
+    .btn-secondary {
+      background-color: var(--secondary);
+      color: white;
+    }
+
+    .btn-secondary:hover {
+      background-color: var(--secondary-dark);
+    }
+
+    .btn-outline {
+      background-color: transparent;
+      border: 1px solid var(--primary);
+      color: var(--primary);
+    }
+
+    .btn-outline:hover {
+      background-color: var(--primary);
+      color: white;
+    }
+
+    .btn-danger {
+      background-color: var(--danger);
+      color: white;
+    }
+
+    .btn-danger:hover {
+      background-color: #bd2130;
+    }
+
+    .btn-sm {
+      padding: 0.4rem 0.75rem;
+      font-size: 0.85rem;
+    }
+
+    .sidebar-nav {
+      list-style: none;
+    }
+
+    .sidebar-nav li {
+      margin-bottom: 0.5rem;
+    }
+
+    .sidebar-nav a {
+      display: flex;
+      padding: 0.75rem 1rem;
+      border-radius: var(--radius);
+      color: var(--dark);
+      font-weight: 500;
+      transition: var(--transition);
+      align-items: center;
+      gap: 0.75rem;
+      border-right: 3px solid transparent;
+    }
+
+    .sidebar-nav a:hover {
+      background-color: var(--gray-light);
+      color: var(--primary);
+    }
+
+    .sidebar-nav a.active {
+      background-color: var(--primary-light);
+      color: var(--primary-dark);
+      font-weight: 600;
+      border-right: 3px solid var(--primary);
+    }
+
+    .sidebar-nav-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 24px;
+      height: 24px;
+    }
+
+    .section-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      color: var(--dark);
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1.25rem;
+      margin-bottom: 2rem;
+    }
+
+    .stat-card {
+      background: white;
+      padding: 1.25rem;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      transition: var(--transition);
+      border: 1px solid var(--border-color);
+    }
+
+    .stat-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow);
+    }
+
+    .stat-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+    }
+
+    .stat-primary {
+      background-color: rgba(106, 176, 76, 0.15);
+      color: var(--primary-dark);
+    }
+
+    .stat-info {
+      background-color: rgba(75, 123, 236, 0.15);
+      color: var(--secondary-dark);
+    }
+
+    .stat-warning {
+      background-color: rgba(240, 147, 43, 0.15);
+      color: var(--warning);
+    }
+
+    .stat-danger {
+      background-color: rgba(235, 77, 75, 0.15);
+      color: var(--danger);
+    }
+
+    .stat-content {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .stat-value {
+      font-size: 1.5rem;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    .stat-label {
+      font-size: 0.85rem;
+      color: var(--gray);
+    }
+
+    .counter-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 20px;
+      height: 20px;
+      padding: 0 6px;
+      border-radius: 10px;
+      background-color: var(--primary);
+      color: white;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.35rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .status-active {
+      background-color: rgba(40, 167, 69, 0.15);
+      color: var(--success);
+    }
+
+    .status-draft {
+      background-color: rgba(75, 123, 236, 0.15);
+      color: var(--secondary-dark);
+    }
+
+    .status-scheduled {
+      background-color: rgba(240, 147, 43, 0.15);
+      color: var(--warning);
+    }
+
+    .status-inactive {
+      background-color: rgba(108, 117, 125, 0.15);
+      color: var(--gray);
+    }
+
+    .tab-container {
+      margin-bottom: 1.5rem;
+    }
+
+    .tab-header {
+      display: flex;
+      border-bottom: 1px solid var(--border-color);
+      margin-bottom: 1.5rem;
+    }
+
+    .tab-item {
+      padding: 0.75rem 1.5rem;
+      cursor: pointer;
+      border-bottom: 3px solid transparent;
+      font-weight: 500;
+      transition: var(--transition);
+    }
+
+    .tab-item.active {
+      border-bottom-color: var(--primary);
+      color: var(--primary-dark);
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      padding: 0.75rem 1rem;
+      text-align: right;
+    }
+
+    th {
+      background-color: var(--gray-light);
+      font-weight: 600;
+      color: var(--gray-dark);
+    }
+
+    tr {
+      border-bottom: 1px solid var(--gray-light);
+    }
+
+    tr:last-child {
+      border-bottom: none;
+    }
+
+    tr:hover {
+      background-color: #f8f9fa;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 1px solid var(--gray-light);
+      border-radius: var(--radius);
+      font-size: 1rem;
+      transition: var(--transition);
+    }
+
+    .form-control:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(106, 176, 76, 0.15);
+    }
+
+    textarea.form-control {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    .form-text {
+      margin-top: 0.25rem;
+      font-size: 0.85rem;
+      color: var(--gray);
+    }
+
+    .form-select {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 1px solid var(--gray-light);
+      border-radius: var(--radius);
+      font-size: 1rem;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%236c757d' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: left 0.75rem center;
+      background-size: 16px 12px;
+    }
+
+    .form-select:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(106, 176, 76, 0.15);
+    }
+    
+    .form-check {
+      display: flex;
+      align-items: center;
+      margin-bottom: 0.75rem;
+    }
+
+    .form-check-input {
+      width: 18px;
+      height: 18px;
+      margin-left: 0.75rem;
+      accent-color: var(--primary);
+    }
+
+    .form-check-label {
+      margin-bottom: 0;
+    }
+
+    .upload-area {
+      border: 2px dashed var(--gray-light);
+      border-radius: var(--radius);
+      padding: 2rem 1.5rem;
+      margin-bottom: 1rem;
+      text-align: center;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .upload-area:hover {
+      border-color: var(--primary);
+      background-color: rgba(80, 142, 56, 0.05);
+    }
+
+    .upload-icon {
+      font-size: 2.5rem;
+      color: var(--primary-light);
+      margin-bottom: 0.5rem;
+    }
+
+    .upload-text {
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+    }
+
+    .upload-hint {
+      font-size: 0.85rem;
+      color: var(--gray);
+    }
+
+    .file-list {
+      margin-top: 1rem;
+    }
+
+    .file-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem;
+      background-color: #f1f3f5;
+      border-radius: var(--radius);
+      margin-bottom: 0.5rem;
+    }
+
+    .file-icon {
+      font-size: 1.5rem;
+      color: var(--gray);
+    }
+
+    .file-info {
+      flex: 1;
+    }
+
+    .file-name {
+      font-weight: 500;
+      font-size: 0.95rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .file-meta {
+      font-size: 0.85rem;
+      color: var(--gray);
+    }
+
+    .file-actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .action-button {
+      background-color: transparent;
+      border: none;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .edit-btn {
+      color: var(--secondary);
+    }
+
+    .edit-btn:hover {
+      background-color: rgba(75, 123, 236, 0.1);
+    }
+
+    .remove-btn {
+      color: var(--danger);
+    }
+
+    .remove-btn:hover {
+      background-color: rgba(235, 77, 75, 0.1);
+    }
+
+    .date-input-group {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .date-input-group .form-control {
+      flex: 1;
+    }
+
+    .search-bar {
+      position: relative;
+      margin-bottom: 1.5rem;
+    }
+
+    .search-bar input {
+      width: 100%;
+      padding: 0.75rem 1rem 0.75rem 2.5rem;
+      border: 1px solid var(--gray-light);
+      border-radius: var(--radius);
+      font-size: 0.95rem;
+      transition: var(--transition);
+    }
+
+    .search-bar input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(106, 176, 76, 0.15);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 0.75rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--gray);
+    }
+
+    @media (max-width: 1024px) {
+      .dashboard-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        grid-column: 1;
+        grid-row: 1;
+      }
+
+      .main-content {
+        grid-column: 1;
+        grid-row: 2;
+      }
+
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo-container">
+      <img src="/api/placeholder/150/50" alt="Ono Academic College Logo" class="logo" />
+    </div>
+    <div class="user-menu">
+      <div class="icon-button">
+        <span>🔔</span>
+      </div>
+      <div class="user-info">
+        <div class="user-avatar">ל</div>
+        <div class="user-details">
+          <span class="user-name">ד"ר ערב טוב</span>
+          <span class="user-role">מרצה</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <nav>
+    <div class="nav-container">
+      <ul class="nav-links">
+        <li><a href="#">לוח בקרה</a></li>
+        <li><a href="#" class="active">ניהול קורסים</a></li>
+        <li><a href="#">בחינות וציונים</a></li>
+        <li><a href="#">פניות סטודנטים</a></li>
+        <li><a href="#">לוח זמנים</a></li>
+        <li><a href="#">מצגות ומסמכים</a></li>
+        <li><a href="#">מערכת שעות</a></li>
+        <li><a href="#">הגדרות</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+    <div class="breadcrumbs">
+      <a href="#">ראשי</a>
+      <span>›</span>
+      <a href="#">ניהול קורסים</a>
+      <span>›</span>
+      <span>פרויקט מסכם FE</span>
+    </div>
+
+    <div class="page-header">
+      <h1 class="page-title">
+        ניהול קורס - פרויקט מסכם FE
+      </h1>
+      <button class="btn btn-primary">
+        <span>הצג תצוגת סטודנט</span>
+      </button>
+    </div>
+
+    <div class="dashboard-grid">
+      <div class="sidebar">
+        <div class="search-bar">
+          <input type="text" placeholder="חיפוש...">
+          <span class="search-icon">🔍</span>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">
+              <span style="display: flex; align-items: center; gap: 0.5rem;">
+                <span style="background-color: var(--primary); color: white; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold;">📋</span>
+                ניהול קורס
+              </span>
+            </div>
+          </div>
+          <div class="card-body" style="padding: 0.75rem 0;">
+            <ul class="sidebar-nav">
+              <li>
+                <a href="#">
+                  <span class="sidebar-nav-icon">📊</span>
+                  <span>סקירה כללית</span>
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  <span class="sidebar-nav-icon">👥</span>
+                  <span>רשימת סטודנטים</span>
+                  <span style="margin-right: auto;" class="counter-badge">26</span>
+                </a>
+              </li>
+              <li>
+                <a href="#" class="active">
+                  <span class="sidebar-nav-icon">📝</span>
+                  <span>ניהול מטלות</span>
+                  <span style="margin-right: auto;" class="counter-badge">4</span>
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  <span class="sidebar-nav-icon">📢</span>
+                  <span>הודעות</span>
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  <span class="sidebar-nav-icon">📚</span>
+                  <span>חומרי לימוד</span>
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  <span class="sidebar-nav-icon">📊</span>
+                  <span>ציונים</span>
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  <span class="sidebar-nav-icon">⚙️</span>
+                  <span>הגדרות קורס</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">
+              <span style="display: flex; align-items: center; gap: 0.5rem;">
+                <span style="background-color: var(--info); color: white; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold;">ℹ️</span>
+                מידע קורס
+              </span>
+            </div>
+          </div>
+          <div class="card-body">
+            <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+              <div style="display: flex; justify-content: space-between;">
+                <span style="color: var(--gray-dark);">קוד קורס:</span>
+                <span style="font-weight: 500;">4072</span>
+              </div>
+              <div style="display: flex; justify-content: space-between;">
+                <span style="color: var(--gray-dark);">סמסטר:</span>
+                <span style="font-weight: 500;">אביב 2025</span>
+              </div>
+              <div style="display: flex; justify-content: space-between;">
+                <span style="color: var(--gray-dark);">נקודות זכות:</span>
+                <span style="font-weight: 500;">3.5</span>
+              </div>
+              <div style="display: flex; justify-content: space-between;">
+                <span style="color: var(--gray-dark);">ימי לימוד:</span>
+                <span style="font-weight: 500;">א׳, ג׳</span>
+              </div>
+              <div style="display: flex; justify-content: space-between;">
+                <span style="color: var(--gray-dark);">מיקום:</span>
+                <span style="font-weight: 500;">בניין 2, כיתה 305</span>
+              </div>
+              <div style="display: flex; justify-content: space-between;">
+                <span style="color: var(--gray-dark);">סטודנטים רשומים:</span>
+                <span style="font-weight: 500;">26</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="main-content">
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon stat-primary">📝</div>
+            <div class="stat-content">
+              <div class="stat-value">4</div>
+              <div class="stat-label">מטלות פעילות</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon stat-info">👥</div>
+            <div class="stat-content">
+              <div class="stat-value">26</div>
+              <div class="stat-label">סטודנטים</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon stat-warning">📄</div>
+            <div class="stat-content">
+              <div class="stat-value">18</div>
+              <div class="stat-label">הגשות לבדיקה</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon stat-danger">⏱️</div>
+            <div class="stat-content">
+              <div class="stat-value">3</div>
+              <div class="stat-label">מטלות בהמתנה</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-container">
+          <div class="tab-header">
+            <div class="tab-item active">ניהול מטלות</div>
+            <div class="tab-item">הוספת מטלה חדשה</div>
+            <div class="tab-item">מטלות להערכה</div>
+          </div>
+
+          <div class="tab-content active">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+              <h2 class="section-title">
+                <span style="color: var(--primary);">📝</span>
+                <span>רשימת מטלות</span>
+              </h2>
+              <button class="btn btn-primary">
+                <span>➕</span>
+                <span>הוספת מטלה חדשה</span>
+              </button>
+            </div>
+
+            <table>
+              <thead>
+                <tr>
+                  <th style="width: 40%">שם המטלה</th>
+                  <th style="width: 15%">תאריך יעד</th>
+                  <th style="width: 15%">משקל בציון</th>
+                  <th style="width: 15%">סטטוס</th>
+                  <th style="width: 15%">פעולות</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>פרויקט מסכם פרונטאנד - הגשת אמצע</td>
+                  <td>27/04/2025 09:00</td>
+                  <td>20%</td>
+                  <td><span class="status-badge status-active">פעיל</span></td>
+                  <td>
+                    <div style="display: flex; gap: 0.5rem;">
+                      <button class="action-button edit-btn">✏️</button>
+                      <button class="action-button remove-btn">🗑️</button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>מדריך React & CSS</td>
+                  <td>18/03/2025 09:00</td>
+                  <td>15%</td>
+                  <td><span class="status-badge status-active">פעיל</span></td>
+                  <td>
+                    <div style="display: flex; gap: 0.5rem;">
+                      <button class="action-button edit-btn">✏️</button>
+                      <button class="action-button remove-btn">🗑️</button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>בניים - יצירת פרונטאנד</td>
+                  <td>13/03/2025 09:00</td>
+                  <td>15%</td>
+                  <td><span class="status-badge status-active">פעיל</span></td>
+                  <td>
+                    <div style="display: flex; gap: 0.5rem;">
+                      <button class="action-button edit-btn">✏️</button>
+                      <button class="action-button remove-btn">🗑️</button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>תכנון פרוייקט</td>
+                  <td>18/03/2025 09:00</td>
+                  <td>25%</td>
+                  <td><span class="status-badge status-active">פעיל</span></td>
+                  <td>
+                    <div style="display: flex; gap: 0.5rem;">
+                      <button class="action-button edit-btn">✏️</button>
+                      <button class="action-button remove-btn">🗑️</button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>הגשה סופית - פרויקט מסכם</td>
+                  <td>15/06/2025 23:59</td>
+                  <td>25%</td>
+                  <td><span class="status-badge status-draft">טיוטה</span></td>
+                  <td>
+                    <div style="display: flex; gap: 0.5rem;">
+                      <button class="action-button edit-btn">✏️</button>
+                      <button class="action-button remove-btn">🗑️</button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="tab-content">
+            <h2 class="section-title">
+              <span style="color: var(--primary);">➕</span>
+              <span>הוספת מטלה חדשה</span>
+            </h2>
+
+            <form>
+              <div class="form-group">
+                <label for="taskName" class="form-label">שם המטלה *</label>
+                <input type="text" id="taskName" class="form-control" placeholder="הזן שם למטלה">
+              </div>
+
+              <div class="form-group">
+                <label for="taskDescription" class="form-label">תיאור המטלה *</label>
+                <textarea id="taskDescription" class="form-control" placeholder="הזן תיאור מפורט של המטלה והדרישות"></textarea>
+              </div>
+
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                <div class="form-group">
+                  <label for="taskDueDate" class="form-label">תאריך יעד *</label>
+                  <div class="date-input-group">
+                    <input type="date" id="taskDueDate" class="form-control">
+                    <input type="time" id="taskDueTime" class="form-control">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="taskWeight" class="form-label">משקל בציון הסופי (%)</label>
+                  <input type="number" id="taskWeight" class="form-control" min="0" max="100" value="20">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="taskType" class="form-label">סוג הגשה</label>
+                <select id="taskType" class="form-select">
+                  <option value="file">הגשת קובץ</option>
+                  <option value="text">הגשת טקסט</option>
+                  <option value="link">הגשת קישור</option>
+                  <option value="mixed">הגשה מעורבת</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">קבצים מצורפים</label>
+                <div class="upload-area">
+                  <div class="upload-icon">📂</div>
+                  <div class="upload-text">לחץ כאן כדי לבחור קבצים</div>
+                  <div class="upload-hint">צרף מסמכים, דוגמאות או תבניות לסטודנטים</div>
+                  <div style="margin-top: 0.75rem;">
+                    <button type="button" class="btn btn-sm btn-outline">בחירת קבצים</button>
+                  </div>
+                </div>
+
+                <div class="file-list">
+                  <div class="file-item">
+                    <div class="file-icon">📄</div>
+                    <div class="file-info">
+                      <div class="file-name">הנחיות_להגשה.docx</div>
+                      <div class="file-meta">245KB • נבחר לפני רגע</div>
+                    </div>
+                    <div class="file-actions">
+                      <button type="button" class="action-button remove-btn">🗑️</button>
+                    </div>
+                  </div>
+                  <div class="file-item">
+                    <div class="file-icon">📊</div>
+                    <div class="file-info">
+                      <div class="file-name">דוגמא_לפרויקט.pdf</div>
+                      <div class="file-meta">1.2MB • נבחר לפני רגע</div>
+                    </div>
+                    <div class="file-actions">
+                      <button type="button" class="action-button remove-btn">🗑️</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">הגדרות נוספות</label>
+                <div class="form-check">
+                  <input type="checkbox" id="allowGroups" class="form-check-input">
+                  <label for="allowGroups" class="form-check-label">אפשר הגשה בקבוצות</label>
+                </div>
+                <div class="form-check">
+                  <input type="checkbox" id="showGrade" class="form-check-input">
+                  <label for="showGrade" class="form-check-label">הצג ציון מיד לאחר הבדיקה</label>
+                </div>
+                <div class="form-check">
+                  <input type="checkbox" id="allowLate" class="form-check-input">
+                  <label for="allowLate" class="form-check-label">אפשר הגשה מאוחרת (עם הורדת נקודות)</label>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="taskStatus" class="form-label">סטטוס</label>
+                <select id="taskStatus" class="form-select">
+                  <option value="draft">טיוטה - שמור להמשך עריכה</option>
+                  <option value="active">פעיל - פרסם לסטודנטים</option>
+                  <option value="scheduled">מתוזמן - פרסם בתאריך עתידי</option>
+                </select>
+              </div>
+
+              <div style="display: flex; justify-content: flex-end; gap: 1rem; margin-top: 2rem;">
+                <button type="button" class="btn btn-outline">ביטול</button>
+                <button type="button" class="btn btn-primary">שמירה ופרסום</button>
+              </div>
+            </form>
+          </div>
+
+          <div class="tab-content">
+            <h2 class="section-title">
+              <span style="color: var(--warning);">📊</span>
+              <span>מטלות להערכה</span>
+            </h2>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+              <div style="display: flex; gap: 0.5rem;">
+                <button class="btn btn-sm btn-outline">כל ההגשות</button>
+                <button class="btn btn-sm btn-primary">ממתינות לבדיקה</button>
+                <button class="btn btn-sm btn-outline">נבדקו</button>
+              </div>
+              <div style="display: flex; gap: 0.5rem; align-items: center;">
+                <span>מיון לפי:</span>
+                <select class="form-select" style="width: auto; padding: 0.4rem 2rem 0.4rem 0.75rem;">
+                  <option>תאריך הגשה (מהחדש לישן)</option>
+                  <option>שם הסטודנט (א-ת)</option>
+                  <option>סטטוס בדיקה</option>
+                </select>
+              </div>
+            </div>
+
+            <table>
+              <thead>
+                <tr>
+                  <th>שם הסטודנט</th>
+                  <th>שם המטלה</th>
+                  <th>תאריך הגשה</th>
+                  <th>סטטוס</th>
+                  <th>פעולות</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>ישראל ישראלי</td>
+                  <td>בניים - יצירת פרונטאנד</td>
+                  <td>10/03/2025 15:42</td>
+                  <td><span class="status-badge status-warning">ממתין לבדיקה</span></td>
+                  <td>
+                    <button class="btn btn-sm btn-primary">בדיקה והערכה</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>דנה כהן</td>
+                  <td>בניים - יצירת פרונטאנד</td>
+                  <td>09/03/2025 18:27</td>
+                  <td><span class="status-badge status-warning">ממתין לבדיקה</span></td>
+                  <td>
+                    <button class="btn btn-sm btn-primary">בדיקה והערכה</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>רון לוי</td>
+                  <td>בניים - יצירת פרונטאנד</td>
+                  <td>11/03/2025 10:15</td>
+                  <td><span class="status-badge status-warning">ממתין לבדיקה</span></td>
+                  <td>
+                    <button class="btn btn-sm btn-primary">בדיקה והערכה</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>מיכל אברהם</td>
+                  <td>תכנון פרוייקט</td>
+                  <td>05/03/2025 23:42</td>
+                  <td><span class="status-badge status-active">נבדק • 92/100</span></td>
+                  <td>
+                    <button class="btn btn-sm btn-outline">צפייה בהערכה</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>אלון נחמיאס</td>
+                  <td>תכנון פרוייקט</td>
+                  <td>06/03/2025 10:30</td>
+                  <td><span class="status-badge status-active">נבדק • 88/100</span></td>
+                  <td>
+                    <button class="btn btn-sm btn-outline">צפייה בהערכה</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</body>
+</html>

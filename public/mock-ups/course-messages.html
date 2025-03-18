@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ONO Academic College - Course Messages</title>
+  <style>
+    :root {
+      --primary: #508e38;
+      --primary-light: #76b159;
+      --primary-dark: #3c6c29;
+      --secondary: #3563cf;
+      --secondary-light: #5178d8;
+      --secondary-dark: #2a4ea6;
+      --accent: #e74c3c;
+      --light: #f8f9fa;
+      --dark: #212529;
+      --gray: #6c757d;
+      --gray-light: #e9ecef;
+      --gray-dark: #495057;
+      --warning: #f39c12;
+      --danger: #dc3545;
+      --success: #28a745;
+      --info: #17a2b8;
+      --bg-white: #ffffff;
+      --border-color: #dee2e6;
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.1);
+      --shadow: 0 4px 6px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.12);
+      --shadow-lg: 0 10px 15px rgba(0,0,0,0.1), 0 4px 6px rgba(0,0,0,0.08);
+      --radius: 6px;
+      --radius-lg: 10px;
+      --transition: all 0.25s ease;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
+    }
+
+    body {
+      background-color: var(--light);
+      color: var(--dark);
+      line-height: 1.6;
+      font-size: 16px;
+    }
+
+    a {
+      text-decoration: none;
+      color: var(--secondary);
+      font-weight: 500;
+    }
+
+    header {
+      background-color: white;
+      box-shadow: var(--shadow);
+      padding: 0.75rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .logo {
+      height: 50px;
+    }
+
+    .user-menu {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.5rem 0.75rem;
+      border-radius: var(--radius);
+      transition: var(--transition);
+      cursor: pointer;
+    }
+
+    .user-avatar {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background-color: var(--secondary);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+
+    nav {
+      background-color: white;
+      padding: 0 2rem;
+      border-bottom: 1px solid var(--gray-light);
+    }
+
+    .nav-container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 0.5rem;
+      overflow-x: auto;
+      padding: 0.5rem 0;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--dark);
+      font-weight: 500;
+      padding: 0.75rem 1rem;
+      display: block;
+      border-radius: var(--radius);
+      transition: var(--transition);
+      white-space: nowrap;
+    }
+
+    .nav-links a:hover {
+      background-color: var(--gray-light);
+      color: var(--primary);
+    }
+
+    .nav-links a.active {
+      background-color: var(--primary-light);
+      color: var(--primary-dark);
+    }
+
+    main {
+      padding: 2rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .breadcrumbs {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1.25rem;
+      color: var(--gray);
+      font-size: 0.95rem;
+      align-items: center;
+      background-color: var(--bg-white);
+      padding: 0.75rem 1rem;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .breadcrumbs a {
+      color: var(--secondary);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .breadcrumbs a:hover {
+      color: var(--primary);
+      text-decoration: underline;
+    }
+
+    .page-header {
+      margin-bottom: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .page-title {
+      font-size: 1.75rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--dark);
+      border-bottom: 3px solid var(--primary);
+      padding-bottom: 0.5rem;
+      display: inline-block;
+    }
+
+    .content-wrapper {
+      display: grid;
+      grid-template-columns: 3fr 1fr;
+      gap: 2rem;
+    }
+
+    .sidebar {
+      order: 2;
+    }
+
+    .main-content {
+      order: 1;
+    }
+
+    .card {
+      background-color: var(--bg-white);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      margin-bottom: 1.5rem;
+      transition: var(--transition);
+      border: 1px solid var(--border-color);
+    }
+
+    .card:hover {
+      box-shadow: var(--shadow-lg);
+    }
+
+    .card-header {
+      padding: 1.25rem;
+      border-bottom: 1px solid var(--gray-light);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: white;
+    }
+
+    .card-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .card-body {
+      padding: 1.5rem;
+    }
+
+    .btn {
+      padding: 0.6rem 1.25rem;
+      border: none;
+      border-radius: var(--radius);
+      cursor: pointer;
+      font-weight: 500;
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.95rem;
+    }
+
+    .btn-primary {
+      background-color: var(--primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background-color: var(--primary-dark);
+    }
+
+    .btn-secondary {
+      background-color: var(--secondary);
+      color: white;
+    }
+
+    .btn-secondary:hover {
+      background-color: var(--secondary-dark);
+    }
+
+    .btn-outline {
+      background-color: transparent;
+      border: 1px solid var(--primary);
+      color: var(--primary);
+    }
+
+    .btn-outline:hover {
+      background-color: var(--primary);
+      color: white;
+    }
+
+    .btn-sm {
+      padding: 0.4rem 0.75rem;
+      font-size: 0.85rem;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-right: 0.5rem;
+    }
+
+    .tag-new {
+      background-color: var(--primary-light);
+      color: white;
+    }
+
+    .tag-urgent {
+      background-color: var(--danger);
+      color: white;
+    }
+
+    .announcement {
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      margin-bottom: 1.5rem;
+      overflow: hidden;
+      transition: var(--transition);
+      background-color: var(--bg-white);
+    }
+
+    .announcement:hover {
+      box-shadow: var(--shadow);
+      transform: translateY(-2px);
+      border-color: var(--primary-light);
+    }
+
+    .announcement-header {
+      padding: 1rem 1.5rem;
+      background-color: #f8f9fa;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .announcement-title {
+      font-weight: 700;
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--dark);
+    }
+
+    .announcement-date {
+      font-size: 0.85rem;
+      color: var(--gray);
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .announcement-body {
+      padding: 1.5rem;
+      background-color: white;
+    }
+
+    .announcement-body p {
+      margin-bottom: 1rem;
+    }
+
+    .announcement-body p:last-child {
+      margin-bottom: 0;
+    }
+
+    .announcement-body ul {
+      padding-right: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .announcement-footer {
+      padding: 0.75rem 1.5rem;
+      background-color: #f1f3f5;
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-info {
+      font-size: 0.9rem;
+      color: var(--gray-dark);
+      font-weight: 500;
+    }
+
+    .sidebar-nav {
+      list-style: none;
+    }
+
+    .sidebar-nav li {
+      margin-bottom: 0.5rem;
+    }
+
+    .sidebar-nav a {
+      display: flex;
+      padding: 0.75rem 1rem;
+      border-radius: var(--radius);
+      color: var(--dark);
+      font-weight: 500;
+      transition: var(--transition);
+      align-items: center;
+      gap: 0.75rem;
+      border-right: 3px solid transparent;
+    }
+
+    .sidebar-nav a:hover {
+      background-color: var(--gray-light);
+      color: var(--primary);
+    }
+
+    .sidebar-nav a.active {
+      background-color: var(--primary-light);
+      color: var(--primary-dark);
+      font-weight: 600;
+      border-right: 3px solid var(--primary);
+    }
+
+    .sidebar-nav-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 24px;
+      height: 24px;
+    }
+
+    .search-bar {
+      position: relative;
+      margin-bottom: 1.5rem;
+    }
+
+    .search-bar input {
+      width: 100%;
+      padding: 0.75rem 1rem 0.75rem 2.5rem;
+      border: 1px solid var(--gray-light);
+      border-radius: var(--radius);
+      font-size: 0.95rem;
+      transition: var(--transition);
+    }
+
+    .search-bar input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(106, 176, 76, 0.15);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 0.75rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--gray);
+    }
+
+    .icon-button {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: var(--transition);
+      position: relative;
+      border: none;
+      background-color: transparent;
+    }
+
+    .icon-button:hover {
+      background-color: var(--gray-light);
+    }
+
+    .date-badge {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-width: 60px;
+      height: 60px;
+      background-color: var(--secondary-light);
+      color: white;
+      border-radius: 8px;
+      padding: 0.25rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .date-day {
+      font-size: 1.25rem;
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    .date-month {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.85);
+    }
+
+    @media (max-width: 1024px) {
+      .content-wrapper {
+        grid-template-columns: 1fr;
+      }
+      
+      .sidebar {
+        order: 1;
+      }
+      
+      .main-content {
+        order: 2;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo-container">
+      <img src="/api/placeholder/150/50" alt="Ono Academic College Logo" class="logo" />
+    </div>
+    <div class="user-menu">
+      <div class="icon-button">
+        <span>🔔</span>
+      </div>
+      <div class="user-info">
+        <div class="user-avatar">ט</div>
+      </div>
+    </div>
+  </header>
+
+  <nav>
+    <div class="nav-container">
+      <ul class="nav-links">
+        <li><a href="#">אודות</a></li>
+        <li><a href="#">מערכת שעות</a></li>
+        <li><a href="#">בחינות וציונים</a></li>
+        <li><a href="#">פניות ובקשות</a></li>
+        <li><a href="#">כללי</a></li>
+        <li><a href="#">משובים</a></li>
+        <li><a href="#">אישורים</a></li>
+        <li><a href="#">קורסים</a></li>
+        <li><a href="#">רישום לקורסים ונכסים</a></li>
+        <li><a href="#">מרכז מתנ"א</a></li>
+        <li><a href="#">תוכניות יחודיות</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+    <div class="breadcrumbs">
+      <a href="#">ראשי</a>
+      <span>›</span>
+      <a href="#">קורסים</a>
+      <span>›</span>
+      <a href="#">כניסה לאתרי קורסים</a>
+      <span>›</span>
+      <span>אתר קורס פרויקט מסכם FE</span>
+    </div>
+
+    <div class="page-header">
+      <h1 class="page-title">
+        <span>אתר קורס פרויקט מסכם FE</span>
+      </h1>
+      <button class="btn btn-outline">פנייה למרצה</button>
+    </div>
+
+    <div class="content-wrapper">
+      <div class="main-content">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">
+              <span style="display: flex; align-items: center; gap: 0.5rem;">
+                <span style="background-color: var(--primary); color: white; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold;">📢</span>
+                הודעות
+              </span>
+            </div>
+            <button class="btn btn-primary btn-sm">
+              <span>שינוי אופן הצגת גודל תוכן למידה</span>
+            </button>
+          </div>
+          <div class="card-body">
+            <div class="announcement">
+              <div class="announcement-header">
+                <div class="announcement-title">
+                  <span>שגיאה נפוצה בעת ביצוע commit & push</span>
+                  <span class="tag tag-new">חדש</span>
+                </div>
+                <div class="announcement-date">
+                  <span>11/03/2025</span>
+                </div>
+              </div>
+              <div class="announcement-body">
+                <p style="font-size: 1.05rem;">ראו שגיאה נפוצה בקובץ המצורף.</p>
+                <p>על מנת לפתור את השגיאה יש לבדוק את שתי הפקודות הבאות. יש להריץ כל פקודה בנפרד. יש לבדוק בקפידה אם הפקודה הוזנה נכון או שכם.</p>
+                <pre style="background-color: #282c34; color: #abb2bf; padding: 1rem; border-radius: 5px; overflow-x: auto; margin: 1rem 0; font-family: 'Consolas', 'Monaco', monospace; font-size: 0.9rem; line-height: 1.5;">
+<span style="color: #98c379;">git config --global user.email</span> <span style="color: #e5c07b;">"you@example.com"</span>
+<span style="color: #98c379;">git config --global user.name</span> <span style="color: #e5c07b;">"Your Name"</span>
+                </pre>
+              </div>
+              <div class="announcement-footer">
+                <div class="footer-info">
+                  <span>פורסם ע"י: ערב טוב</span>
+                </div>
+                <button class="btn btn-secondary btn-sm" style="font-weight: 600; padding: 0.5rem 1rem;">
+                  <span>📥 הורדת קובץ</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="announcement">
+              <div class="announcement-header">
+                <div class="announcement-title">
+                  <span>לקראת שיעור 2 - הקמת פרויקט פרונטאנד חדש</span>
+                </div>
+                <div class="announcement-date">
+                  <span>10/03/2025</span>
+                </div>
+              </div>
+              <div class="announcement-body">
+                <p>ערב טוב.</p>
+                <p>מחר בשיעור נדבר בנושאים הבאים:</p>
+                <ul>
+                  <li>חזרה על שיעור 1 - מסמך תכנון, מדריך react & css</li>
+                  <li>הקמת פרויקט חדש - שימוש ב github, vite, material ui</li>
+                </ul>
+                <p>בחלק האחרון של השיעור יהיה זמן לתרגול וכן הצגת פניות.</p>
+                <div style="background-color: #fff3cd; padding: 1rem; border-radius: 5px; border-right: 4px solid var(--warning); margin: 1rem 0; color: #856404;">
+                  <p style="margin: 0; font-weight: 500;">⚠️ שימו/ה לב שהנושא מלא שורות לכל הסרטים (אין לכם מה לבצע ידי סטודנטים במהלך המרץ).</p>
+                </div>
+                <ul>
+                  <li>עלינו לאחר הקורס מצגת התקנות נדרשות. מומלץ לבצע לפני תחילת השיעור. ניתן גם לבצע בזמן התרגול.</li>
+                  <li>אשמח לראות את אחת מערכות התכנון וידוי עליה בכיתה. צורך שמעוניין להציג את העבודה (גם אם לא שלמה) - שלחו לי בקשת הודעה עם קובץ העבודה.</li>
+                </ul>
+                <p><button class="btn btn-sm" style="background-color: var(--gray-light); color: var(--dark);">קישור</button></p>
+              </div>
+              <div class="announcement-footer">
+                <div class="footer-info">
+                  <span>פורסם ע"י: ערב טוב</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="announcement">
+              <div class="announcement-header">
+                <div class="announcement-title">
+                  <span>הגשה - תכנון פרוייקט</span>
+                </div>
+                <div class="announcement-date">
+                  <span>04/03/2025</span>
+                </div>
+              </div>
+              <div class="announcement-body">
+                <p>ערב טוב.</p>
+                <p>הנושא המרכזי לפרוייקט הוא שיפור מערכת המידע לסטודנטים לאחר שיעור מעמיק בנושא בשיעורים הבאים.</p>
+                <p>בכניסה ל"נושאים לפרוייקט" יש פירוט על כל אחד מהנושאים.</p>
+                <p>יש לבחור את אחד הנושאים, ועל פינו לעצב מערכת במסגרת עבודת תכנון הפרוייקט.</p>
+                <h4 style="margin-top: 1rem; font-size: 1.1rem;">שיעורי הודעות:</h4>
+                <ul>
+                  <li>שיעור עמוד הבית</li>
+                  <li>שיעור הודעות</li>
+                  <li>הזמנות מהמערכת</li>
+                </ul>
+              </div>
+              <div class="announcement-footer">
+                <div class="footer-info">
+                  <span>פורסם ע"י: ערב טוב</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sidebar">
+        <div class="search-bar">
+          <input type="text" placeholder="חיפוש...">
+          <span class="search-icon">🔍</span>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">תפריט</div>
+          </div>
+          <div class="card-body" style="padding: 0.75rem 0;">
+            <ul class="sidebar-nav">
+              <li>
+                <a href="#" class="active">
+                  <span class="sidebar-nav-icon">📢</span>
+                  <span>הודעות</span>
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  <span class="sidebar-nav-icon">📚</span>
+                  <span>חומרי למידה</span>
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  <span class="sidebar-nav-icon">📝</span>
+                  <span>מטלות הגשה</span>
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  <span class="sidebar-nav-icon">📊</span>
+                  <span>אודות הקורס</span>
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  <span class="sidebar-nav-icon">💬</span>
+                  <span>פורום הקורס</span>
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  <span class="sidebar-nav-icon">👥</span>
+                  <span>מעבר למשתמשים נוספים</span>
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  <span class="sidebar-nav-icon">📋</span>
+                  <span>הצגת הכל</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">הודעות אחרונות</div>
+          </div>
+          <div class="card-body">
+            <div style="display: flex; gap: 1rem; margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid var(--gray-light);">
+              <div class="date-badge">
+                <span class="date-day">11</span>
+                <span class="date-month">מרץ</span>
+              </div>
+              <div>
+                <h4 style="font-size: 0.95rem; margin-bottom: 0.25rem;">שגיאה נפוצה בעת ביצוע commit & push</h4>
+                <p style="font-size: 0.85rem; color: var(--gray-dark);">ראו שגיאה נפוצה בקובץ המצורף...</p>
+              </div>
+            </div>
+            <div style="display: flex; gap: 1rem; margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid var(--gray-light);">
+              <div class="date-badge">
+                <span class="date-day">10</span>
+                <span class="date-month">מרץ</span>
+              </div>
+              <div>
+                <h4 style="font-size: 0.95rem; margin-bottom: 0.25rem;">לקראת שיעור 2 - הקמת פרויקט פרונטאנד חדש</h4>
+                <p style="font-size: 0.85rem; color: var(--gray-dark);">מחר בשיעור נדבר בנושאים הבאים...</p>
+              </div>
+            </div>
+            <div style="display: flex; gap: 1rem;">
+              <div class="date-badge">
+                <span class="date-day">04</span>
+                <span class="date-month">מרץ</span>
+              </div>
+              <div>
+                <h4 style="font-size: 0.95rem; margin-bottom: 0.25rem;">הגשה - תכנון פרוייקט</h4>
+                <p style="font-size: 0.85rem; color: var(--gray-dark);">הנושא המרכזי לפרוייקט הוא שיפור מערכת...</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</body>
+</html>

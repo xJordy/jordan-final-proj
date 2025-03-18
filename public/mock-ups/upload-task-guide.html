@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>מדריך להגשת מטלות - ONO Academic College</title>
+  <style>
+    :root {
+      --primary: #508e38;
+      --primary-light: #76b159;
+      --primary-dark: #3c6c29;
+      --secondary: #3563cf;
+      --secondary-light: #5178d8;
+      --secondary-dark: #2a4ea6;
+      --accent: #e74c3c;
+      --light: #f8f9fa;
+      --dark: #212529;
+      --gray: #6c757d;
+      --gray-light: #e9ecef;
+      --gray-dark: #495057;
+      --warning: #f39c12;
+      --danger: #dc3545;
+      --success: #28a745;
+      --info: #17a2b8;
+      --bg-white: #ffffff;
+      --border-color: #dee2e6;
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.1);
+      --shadow: 0 4px 6px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.12);
+      --shadow-lg: 0 10px 15px rgba(0,0,0,0.1), 0 4px 6px rgba(0,0,0,0.08);
+      --radius: 6px;
+      --radius-lg: 10px;
+      --transition: all 0.25s ease;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
+    }
+
+    body {
+      background-color: var(--light);
+      color: var(--dark);
+      line-height: 1.6;
+      font-size: 16px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    .guide-header {
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+
+    .guide-title {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--primary-dark);
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+    }
+
+    .guide-subtitle {
+      font-size: 1.1rem;
+      color: var(--gray);
+    }
+
+    .step-container {
+      margin-bottom: 3rem;
+    }
+
+    .step-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .step-number {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: var(--primary);
+      color: white;
+      font-weight: 700;
+      font-size: 1.25rem;
+      flex-shrink: 0;
+    }
+
+    .step-title {
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: var(--primary-dark);
+    }
+
+    .step-content {
+      margin-right: 3.5rem;
+    }
+
+    .card {
+      background-color: white;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      margin-bottom: 1.5rem;
+      overflow: hidden;
+    }
+
+    .card-body {
+      padding: 1.5rem;
+    }
+
+    .card-bordered {
+      border: 1px solid var(--border-color);
+    }
+
+    .info-box {
+      background-color: rgba(23, 162, 184, 0.1);
+      border-right: 4px solid var(--info);
+      padding: 1rem;
+      margin-bottom: 1.5rem;
+      border-radius: var(--radius);
+      display: flex;
+      gap: 1rem;
+    }
+
+    .info-icon {
+      color: var(--info);
+      font-size: 1.25rem;
+      flex-shrink: 0;
+    }
+
+    .warning-box {
+      background-color: rgba(240, 147, 43, 0.1);
+      border-right: 4px solid var(--warning);
+      padding: 1rem;
+      margin-bottom: 1.5rem;
+      border-radius: var(--radius);
+      display: flex;
+      gap: 1rem;
+    }
+
+    .warning-icon {
+      color: var(--warning);
+      font-size: 1.25rem;
+      flex-shrink: 0;
+    }
+
+    .tip-box {
+      background-color: rgba(80, 142, 56, 0.1);
+      border-right: 4px solid var(--primary);
+      padding: 1rem;
+      margin-bottom: 1.5rem;
+      border-radius: var(--radius);
+      display: flex;
+      gap: 1rem;
+    }
+
+    .tip-icon {
+      color: var(--primary);
+      font-size: 1.25rem;
+      flex-shrink: 0;
+    }
+
+    .img-container {
+      border: 1px solid var(--gray-light);
+      border-radius: var(--radius);
+      padding: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      border-radius: var(--radius);
+    }
+
+    .img-caption {
+      text-align: center;
+      font-size: 0.9rem;
+      color: var(--gray);
+      margin-top: 0.5rem;
+    }
+
+    ul, ol {
+      padding-right: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    li {
+      margin-bottom: 0.5rem;
+    }
+
+    .btn {
+      padding: 0.6rem 1.25rem;
+      border: none;
+      border-radius: var(--radius);
+      cursor: pointer;
+      font-weight: 500;
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.95rem;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background-color: var(--primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background-color: var(--primary-dark);
+    }
+
+    .screenshot {
+      margin-bottom: 1.5rem;
+      box-shadow: var(--shadow);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .checklist {
+      background-color: white;
+      border-radius: var(--radius);
+      border: 1px solid var(--border-color);
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .checklist-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .checklist ul {
+      list-style-type: none;
+      padding-right: 0;
+    }
+
+    .checklist li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      margin-bottom: 0.75rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--gray-light);
+    }
+
+    .checklist li:last-child {
+      margin-bottom: 0;
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+
+    .checkbox-icon {
+      color: var(--primary);
+      font-size: 1.25rem;
+      flex-shrink: 0;
+    }
+
+    .faq-section {
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--gray-light);
+    }
+
+    .faq-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      color: var(--primary-dark);
+      text-align: center;
+    }
+
+    .faq-item {
+      margin-bottom: 1.5rem;
+    }
+
+    .faq-question {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: var(--dark);
+    }
+
+    .faq-answer {
+      color: var(--gray-dark);
+    }
+
+    .back-to-top {
+      position: fixed;
+      bottom: 2rem;
+      left: 2rem;
+      background-color: var(--primary);
+      color: white;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+      cursor: pointer;
+      opacity: 0.8;
+    }
+
+    .back-to-top:hover {
+      opacity: 1;
+      transform: translateY(-5px);
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 1.5rem;
+      }
+      
+      .step-content {
+        margin-right: 1rem;
+      }
+      
+      .guide-title {
+        font-size: 1.5rem;
+      }
+      
+      .step-title {
+        font-size: 1.25rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="guide-header">
+      <h1 class="guide-title">
+        <span>📚</span>
+        <span>מדריך להגשת מטלות</span>
+      </h1>
+      <p class="guide-subtitle">המדריך המלא להגשת מטלות במערכת הלמידה המקוונת של המכללה האקדמית אונו</p>
+    </div>
+
+    <div class="step-container">
+      <div class="step-header">
+        <div class="step-number">1</div>
+        <h2 class="step-title">גישה למטלות הקורס</h2>
+      </div>
+      <div class="step-content">
+        <p>על מנת להגיש מטלה, ראשית עליך לגשת לאזור המטלות בקורס הרלוונטי. ישנן מספר דרכים להגיע למטלות:</p>
+        
+        <div class="card card-bordered">
+          <div class="card-body">
+            <ul>
+              <li><strong>לוח המטלות האישי</strong> - בדף הבית של המערכת, תוכל/י למצוא את לוח המטלות המציג את כל המטלות מכל הקורסים.</li>
+              <li><strong>דרך הקורס</strong> - כנס/י לדף הקורס הרלוונטי ולחץ/י על לשונית "מטלות" בתפריט הקורס.</li>
+              <li><strong>הודעות מהמרצה</strong> - פעמים רבות המרצים שולחים הודעות עם קישור ישיר למטלה החדשה.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="img-container">
+          <img src="/api/placeholder/800/400" alt="צילום מסך של אזור המטלות" />
+          <p class="img-caption">אזור המטלות בדף הקורס</p>
+        </div>
+
+        <div class="info-box">
+          <div class="info-icon">ℹ️</div>
+          <div>
+            <p>שים/י לב שתוכל/י לראות את הזמן שנותר להגשת כל מטלה, כולל סטטוס צבעוני המציין את דחיפות ההגשה:</p>
+            <ul style="margin-bottom: 0;">
+              <li><span style="color: var(--danger);">אדום</span> - נותרו פחות מ-24 שעות להגשה</li>
+              <li><span style="color: var(--warning);">כתום</span> - נותרו פחות מ-3 ימים להגשה</li>
+              <li><span style="color: var(--success);">ירוק</span> - נותרו יותר מ-3 ימים להגשה</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-container">
+      <div class="step-header">
+        <div class="step-number">2</div>
+        <h2 class="step-title">הבנת מטלת הקורס</h2>
+      </div>
+      <div class="step-content">
+        <p>לפני שמתחילים להכין את המטלה, חשוב לקרוא היטב את כל פרטי המטלה והדרישות. בדף המטלה תוכל/י למצוא:</p>
+        
+        <div class="card card-bordered">
+          <div class="card-body">
+            <ul>
+              <li><strong>שם המטלה ותיאור כללי</strong></li>
+              <li><strong>תאריך אחרון להגשה</strong> ושעת הסיום</li>
+              <li><strong>משקל המטלה בציון הסופי</strong> של הקורס</li>
+              <li><strong>הנחיות מפורטות</strong> לגבי אופן ההגשה ודרישות המטלה</li>
+              <li><strong>קבצים מצורפים</strong> מהמרצה, כמו הוראות מפורטות, דוגמאות, תבניות וכדומה</li>
+              <li><strong>מחוון הערכה</strong> המפרט את אופן חלוקת הניקוד בהערכת המטלה (אם זמין)</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="warning-box">
+          <div class="warning-icon">⚠️</div>
+          <div>
+            <p>חשוב מאוד לקרוא את כל ההנחיות לפני תחילת העבודה על המטלה! אי עמידה בהנחיות (כמו פורמט לא נכון, קבצים חסרים, או הגשה מאוחרת) עלולה להוביל להורדת נקודות.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-container">
+      <div class="step-header">
+        <div class="step-number">3</div>
+        <h2 class="step-title">הכנת הקבצים להגשה</h2>
+      </div>
+      <div class="step-content">
+        <p>לאחר שהכנת את המטלה, יש להכין את הקבצים להגשה בהתאם לדרישות המטלה:</p>
+        
+        <div class="checklist">
+          <div class="checklist-title">
+            <span>✓</span>
+            <span>רשימת הכנה להגשה</span>
+          </div>
+          <ul>
+            <li>
+              <div class="checkbox-icon">✓</div>
+              <div>
+                <strong>שמירת הקבצים בפורמט הנדרש</strong> - וודא/י שהקבצים נשמרו בפורמט שהמרצה דרש/ה (Word, PDF, וכו').
+              </div>
+            </li>
+            <li>
+              <div class="checkbox-icon">✓</div>
+              <div>
+                <strong>שמות קבצים ברורים</strong> - תן/י שמות ברורים לקבצים שיכללו את שמך ואת שם המטלה, לדוגמה: <br>
+                <code>ישראל_ישראלי_מטלה1_React.pdf</code>
+              </div>
+            </li>
+            <li>
+              <div class="checkbox-icon">✓</div>
+              <div>
+                <strong>בדיקת גודל הקבצים</strong> - וודא/י שהקבצים אינם חורגים ממגבלת הגודל המותרת (בדרך כלל עד 20MB לקובץ).
+              </div>
+            </li>
+            <li>
+              <div class="checkbox-icon">✓</div>
+              <div>
+                <strong>בדיקה סופית</strong> - פתח/י את הקבצים שהכנת וודא/י שהם תקינים, שלמים ולא פגומים.
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="tip-box">
+          <div class="tip-icon">💡</div>
+          <div>
+            <p><strong>טיפ:</strong> מומלץ לשמור גיבויים של הקבצים שלך במהלך העבודה על המטלה. אל תחכו לרגע האחרון להכנת העבודה ולהגשתה!</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-container">
+      <div class="step-header">
+        <div class="step-number">4</div>
+        <h2 class="step-title">הגשת המטלה</h2>
+      </div>
+      <div class="step-content">
+        <p>כשהקבצים מוכנים, תוכל/י להגיש את המטלה דרך המערכת:</p>
+        
+        <ol>
+          <li>לחץ/י על כפתור <strong>"הגשת מטלה"</strong> בדף המטלה.</li>
+          <li>חלון ההגשה ייפתח עם פרטי המטלה (שם, מועד הגשה, משקל בציון).</li>
+          <li>באזור העלאת הקבצים, תוכל/י <strong>לגרור ולשחרר קבצים</strong> או ללחוץ על <strong>"בחירת קבצים"</strong> כדי לבחור קבצים מהמחשב.</li>
+          <li>הקבצים שבחרת יוצגו ברשימה. תוכל/י להסיר קבצים מהרשימה לפני ההגשה אם צריך.</li>
+          <li>סמן/י את תיבת האישור המצהירה שזוהי עבודתך המקורית.</li>
+          <li>במידה ומדובר בעבודה קבוצתית והמטלה מאפשרת זאת, תוכל/י לבחור את חברי הקבוצה מהרשימה.</li>
+          <li>לחץ/י על כפתור <strong>"הגשת המטלה"</strong> לסיום תהליך ההגשה.</li>
+        </ol>
+
+        <div class="img-container">
+          <img src="/api/placeholder/800/500" alt="צילום מסך של חלון הגשת מטלה" />
+          <p class="img-caption">חלון הגשת מטלה</p>
+        </div>
+
+        <div class="warning-box">
+          <div class="warning-icon">⚠️</div>
+          <div>
+            <p><strong>חשוב מאוד:</strong> ברוב המקרים, לא ניתן לערוך או להגיש מחדש את המטלה לאחר הגשתה. וודא/י שהקבצים הנכונים הועלו לפני לחיצה על כפתור ההגשה הסופי.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-container">
+      <div class="step-header">
+        <div class="step-number">5</div>
+        <h2 class="step-title">וידוא הגשה ואישור</h2>
+      </div>
+      <div class="step-content">
+        <p>לאחר הגשת המטלה, חשוב לוודא שההגשה הושלמה בהצלחה:</p>
+        
+        <div class="card card-bordered">
+          <div class="card-body">
+            <ol>
+              <li>תוצג הודעת אישור על המסך המאשרת את השלמת ההגשה.</li>
+              <li>תישלח הודעת דוא"ל לכתובת שלך עם אישור הגשה.</li>
+              <li>בדף המטלה, הסטטוס ישתנה ל-<strong>"הוגש"</strong> עם ציון תאריך ושעת ההגשה.</li>
+              <li>תוכל/י לצפות בקבצים שהוגשו בכל עת דרך דף המטלה.</li>
+            </ol>
+          </div>
+        </div>
+
+        <div class="tip-box">
+          <div class="tip-icon">💡</div>
+          <div>
+            <p><strong>עצה חשובה:</strong> מומלץ לשמור את אישור ההגשה (לצלם את המסך או לשמור את הודעת הדוא"ל) כהוכחה שההגשה הושלמה בהצלחה, במקרה שתתעורר בעיה בהמשך.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="faq-section">
+      <h2 class="faq-title">שאלות נפוצות</h2>
+      
+      <div class="faq-item">
+        <div class="faq-question">מה קורה אם אני מגיש/ה את המטלה באיחור?</div>
+        <div class="faq-answer">
+          <p>כל מטלה מוגדרת עם מדיניות איחורים ספציפית. בחלק מהמטלות, לא ניתן להגיש לאחר המועד האחרון. במטלות אחרות, ייתכן שתותר הגשה מאוחרת עם הורדת נקודות. בדוק/י את מדיניות האיחורים הספציפית למטלה שלך, המופיעה בדף המטלה או בסילבוס הקורס.</p>
+        </div>
+      </div>
+      
+      <div class="faq-item">
+        <div class="faq-question">האם אני יכול/ה להגיש יותר מגרסה אחת של המטלה?</div>
+        <div class="faq-answer">
+          <p>ברוב המקרים, לא ניתן להגיש יותר מפעם אחת את המטלה. אם גילית טעות לאחר ההגשה, יש לפנות למרצה הקורס באופן מיידי דרך מערכת ההודעות. המרצה יכול/ה להחליט האם לאפשר לך להגיש מחדש, בהתאם למדיניות הקורס.</p>
+        </div>
+      </div>
+      
+      <div class="faq-item">
+        <div class="faq-question">איזה סוגי קבצים ניתן להגיש?</div>
+        <div class="faq-answer">
+          <p>בדרך כלל מקובלים הפורמטים הנפוצים כמו Word (.docx), PDF, Excel (.xlsx), PowerPoint (.pptx), קבצי תמונה (.jpg, .png), וקבצי דחוסים (.zip). עם זאת, בכל מטלה יצוינו הפורמטים המותרים. אם הפורמט שברצונך להגיש אינו מופיע ברשימה המותרת, יש להמיר אותו לפורמט מותר או לפנות למרצה הקורס לפני ההגשה.</p>
+        </div>
+      </div>
+      
+      <div class="faq-item">
+        <div class="faq-question">מה עושים אם נתקלים בבעיה טכנית בזמן ההגשה?</div>
+        <div class="faq-answer">
+          <p>במקרה של בעיה טכנית, יש לפעול כך:</p>
+          <ol>
+            <li>צלם/י את המסך המראה את הבעיה (Screenshot)</li>
+            <li>נסה/י להגיש שוב לאחר רענון הדף</li>
+            <li>אם הבעיה נמשכת, פנה/י מיד למרצה הקורס והתמיכה הטכנית דרך מערכת ההודעות</li>
+            <li>שלח/י את המטלה גם למרצה בדוא"ל אם המועד האחרון מתקרב, כגיבוי, עד שהבעיה תיפתר</li>
+          </ol>
+        </div>
+      </div>
+      
+      <div class="faq-item">
+        <div class="faq-question">היכן אוכל לראות את הציון והמשוב על המטלה שהגשתי?</div>
+        <div class="faq-answer">
+          <p>לאחר שהמרצה יבדוק את המטלה ויעניק ציון, תקבל/י התראה במערכת ובדוא"ל. תוכל/י לצפות בציון ובמשוב על ידי כניסה לדף המטלה או דרך לשונית "ציונים" בדף הקורס. המשוב יכול לכלול הערות כלליות, הערות על גבי הקובץ שהגשת, או קובץ משוב נפרד.</p>
+        </div>
+      </div>
+    </div>
+
+    <div style="text-align: center; margin-top: 3rem; margin-bottom: 2rem;">
+      <p>אם עדיין יש לך שאלות לגבי הגשת מטלות, אנא פנה/י למרצה הקורס או לצוות התמיכה הטכנית.</p>
+      <a href="#" class="btn btn-primary" style="margin-top: 1rem;">
+        <span>📧</span>
+        <span>פנייה לתמיכה</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+    ↑
+  </div>
+</body>
+</html>

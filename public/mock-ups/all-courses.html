@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ono Academic College - Courses Page</title>
+  <style>
+    :root {
+      --primary: #6ab04c;
+      --primary-light: #8ed270;
+      --primary-dark: #5a9a3d;
+      --secondary: #4b7bec;
+      --secondary-light: #6392f0;
+      --secondary-dark: #3867d6;
+      --accent: #fc5c65;
+      --light: #f9fafc;
+      --dark: #2d3436;
+      --gray: #95a5a6;
+      --gray-light: #dfe6e9;
+      --gray-dark: #636e72;
+      --danger: #eb4d4b;
+      --warning: #f0932b;
+      --success: #6ab04c;
+      --info: #4b7bec;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+      --shadow: 0 4px 6px rgba(0,0,0,0.04), 0 1px 3px rgba(0,0,0,0.08);
+      --shadow-lg: 0 10px 15px rgba(0,0,0,0.05), 0 4px 6px rgba(0,0,0,0.05);
+      --radius: 8px;
+      --radius-lg: 12px;
+      --transition: all 0.3s ease;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
+    }
+
+    body {
+      background-color: var(--light);
+      color: var(--dark);
+      line-height: 1.6;
+    }
+
+    header {
+      background-color: white;
+      box-shadow: var(--shadow);
+      padding: 0.75rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .logo {
+      height: 50px;
+    }
+
+    .logo-text {
+      font-weight: 600;
+      font-size: 1.2rem;
+      color: var(--primary-dark);
+    }
+
+    .user-menu {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.5rem 0.75rem;
+      border-radius: var(--radius);
+      transition: var(--transition);
+      cursor: pointer;
+    }
+
+    .user-info:hover {
+      background-color: var(--gray-light);
+    }
+
+    .user-avatar {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background-color: var(--secondary);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+
+    .user-details {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .user-name {
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    .user-role {
+      font-size: 0.8rem;
+      color: var(--gray);
+    }
+
+    .icon-button {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: var(--transition);
+      position: relative;
+      background-color: transparent;
+    }
+
+    .icon-button:hover {
+      background-color: var(--gray-light);
+    }
+
+    nav {
+      background-color: white;
+      padding: 0 2rem;
+      border-bottom: 1px solid var(--gray-light);
+    }
+
+    .nav-container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 0.5rem;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--dark);
+      font-weight: 500;
+      padding: 1rem 1.25rem;
+      display: block;
+      border-bottom: 3px solid transparent;
+      transition: var(--transition);
+    }
+
+    .nav-links a:hover {
+      color: var(--primary);
+    }
+
+    .nav-links a.active {
+      color: var(--primary);
+      border-bottom: 3px solid var(--primary);
+    }
+
+    main {
+      padding: 2rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .breadcrumbs {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+      color: var(--gray);
+      font-size: 0.9rem;
+      align-items: center;
+    }
+
+    .breadcrumbs a {
+      color: var(--gray-dark);
+      text-decoration: none;
+    }
+
+    .breadcrumbs a:hover {
+      color: var(--primary);
+      text-decoration: underline;
+    }
+
+    .page-title {
+      margin-bottom: 1.5rem;
+      font-size: 1.75rem;
+      font-weight: 600;
+      color: var(--dark);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .page-description {
+      margin-bottom: 2rem;
+      color: var(--gray-dark);
+    }
+
+    .controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .search-filter {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      flex: 1;
+    }
+
+    .search-bar {
+      display: flex;
+      position: relative;
+      flex: 1;
+      min-width: 250px;
+    }
+
+    .search-bar input {
+      width: 100%;
+      padding: 0.75rem 1.25rem 0.75rem 3rem;
+      border: 1px solid var(--gray-light);
+      border-radius: var(--radius);
+      outline: none;
+      transition: var(--transition);
+      font-size: 0.95rem;
+    }
+
+    .search-bar input:focus {
+      border-color: var(--primary-light);
+      box-shadow: 0 0 0 3px rgba(106, 176, 76, 0.15);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--gray);
+    }
+
+    .filter-dropdown {
+      position: relative;
+    }
+
+    .filter-dropdown select {
+      padding: 0.75rem 2.5rem 0.75rem 1.25rem;
+      border: 1px solid var(--gray-light);
+      border-radius: var(--radius);
+      background-color: white;
+      appearance: none;
+      outline: none;
+      cursor: pointer;
+      font-size: 0.95rem;
+      transition: var(--transition);
+    }
+
+    .filter-dropdown select:focus {
+      border-color: var(--primary-light);
+      box-shadow: 0 0 0 3px rgba(106, 176, 76, 0.15);
+    }
+
+    .filter-dropdown::after {
+      content: "▼";
+      font-size: 0.7rem;
+      position: absolute;
+      right: 1.25rem;
+      top: 50%;
+      transform: translateY(-50%);
+      pointer-events: none;
+      color: var(--gray);
+    }
+
+    .btn {
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: var(--radius);
+      cursor: pointer;
+      font-weight: 500;
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.95rem;
+    }
+
+    .btn-primary {
+      background-color: var(--primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background-color: var(--primary-dark);
+    }
+
+    .btn-outline {
+      background-color: transparent;
+      border: 1px solid var(--primary);
+      color: var(--primary);
+    }
+
+    .btn-outline:hover {
+      background-color: var(--primary);
+      color: white;
+    }
+
+    .btn-secondary {
+      background-color: var(--secondary);
+      color: white;
+    }
+
+    .btn-secondary:hover {
+      background-color: var(--secondary-dark);
+    }
+
+    .btn-sm {
+      padding: 0.5rem 1rem;
+      font-size: 0.85rem;
+    }
+
+    .course-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+
+    .course-card {
+      background-color: white;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      transition: var(--transition);
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    .course-card:hover {
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-5px);
+    }
+
+    .course-header {
+      padding: 1.25rem;
+      border-bottom: 1px solid var(--gray-light);
+      position: relative;
+    }
+
+    .course-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: var(--dark);
+    }
+
+    .course-instructor {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.9rem;
+      color: var(--gray-dark);
+    }
+
+    .course-tag {
+      position: absolute;
+      top: 1.25rem;
+      left: 1.25rem;
+      background-color: var(--primary-light);
+      color: var(--primary-dark);
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 500;
+    }
+
+    .course-body {
+      padding: 1.25rem;
+      flex: 1;
+    }
+
+    .course-details {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .detail-item {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .detail-label {
+      font-size: 0.8rem;
+      color: var(--gray);
+      margin-bottom: 0.25rem;
+    }
+
+    .detail-value {
+      font-size: 0.95rem;
+      font-weight: 500;
+    }
+
+    .course-description {
+      margin-bottom: 1.25rem;
+      font-size: 0.95rem;
+      color: var(--gray-dark);
+    }
+
+    .course-status {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.9rem;
+      color: var(--primary-dark);
+      margin-bottom: 1rem;
+    }
+
+    .status-icon {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background-color: var(--primary-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      color: var(--primary-dark);
+    }
+
+    .file-types {
+      margin-top: 0.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .file-type {
+      padding: 0.2rem 0.5rem;
+      background-color: var(--gray-light);
+      border-radius: 4px;
+      font-size: 0.8rem;
+      color: var(--gray-dark);
+    }
+
+    .course-footer {
+      padding: 1.25rem;
+      border-top: 1px solid var(--gray-light);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .course-badges {
+      display: flex;
+      gap: 0.75rem;
+    }
+
+    .badge {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      font-weight: 500;
+    }
+
+    .badge-info {
+      background-color: rgba(75, 123, 236, 0.15);
+      color: var(--secondary-dark);
+    }
+
+    .badge-warning {
+      background-color: rgba(240, 147, 43, 0.15);
+      color: var(--warning);
+    }
+
+    .upcoming-course {
+      background-color: rgba(106, 176, 76, 0.08);
+      border-right: 4px solid var(--primary);
+    }
+
+    .active-course {
+      background-color: rgba(75, 123, 236, 0.08);
+      border-right: 4px solid var(--secondary);
+    }
+
+    .centered-message {
+      text-align: center;
+      margin: 4rem 0;
+      color: var(--gray);
+    }
+
+    .pagination {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 3rem;
+    }
+
+    .pagination-item {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: var(--transition);
+      font-weight: 500;
+    }
+
+    .pagination-item:hover {
+      background-color: var(--gray-light);
+    }
+
+    .pagination-item.active {
+      background-color: var(--primary);
+      color: white;
+    }
+
+    .pagination-arrow {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .pagination-arrow:hover {
+      background-color: var(--gray-light);
+    }
+
+    .pagination-dots {
+      margin: 0 0.5rem;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 2rem 0;
+      background-color: white;
+      margin-top: 3rem;
+      border-top: 1px solid var(--gray-light);
+      color: var(--gray);
+      font-size: 0.9rem;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-top: 1rem;
+    }
+
+    .footer-links a {
+      color: var(--gray-dark);
+      text-decoration: none;
+    }
+
+    .footer-links a:hover {
+      color: var(--primary);
+      text-decoration: underline;
+    }
+
+    @media (max-width: 1024px) {
+      .course-grid {
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      }
+    }
+
+    @media (max-width: 768px) {
+      .course-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .search-filter {
+        flex-direction: column;
+      }
+      
+      .controls {
+        flex-direction: column;
+        align-items: stretch;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo-container">
+      <img src="/api/placeholder/150/50" alt="Ono Academic College Logo" class="logo" />
+      <span class="logo-text">פורטל הסטודנטים</span>
+    </div>
+    <div class="user-menu">
+      <div class="icon-button">
+        <span>🔍</span>
+      </div>
+      <div class="icon-button">
+        <span>🔔</span>
+        <span class="notification-count">3</span>
+      </div>
+      <div class="user-info">
+        <div class="user-avatar">ט</div>
+        <div class="user-details">
+          <span class="user-name">טל ישראלי</span>
+          <span class="user-role">סטודנט לתואר שני</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <nav>
+    <div class="nav-container">
+      <ul class="nav-links">
+        <li><a href="#">דף הבית</a></li>
+        <li><a href="#">מידע אישי</a></li>
+        <li><a href="#" class="active">קורסים</a></li>
+        <li><a href="#">מערכת שעות</a></li>
+        <li><a href="#">בחינות וציונים</a></li>
+        <li><a href="#">ספרייה</a></li>
+        <li><a href="#">תשלומים</a></li>
+        <li><a href="#">אירועים</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+    <div class="breadcrumbs">
+      <a href="#">ראשי</a>
+      <span>›</span>
+      <a href="#">לימודים</a>
+      <span>›</span>
+      <span>רשימת קורסים</span>
+    </div>
+
+    <div class="page-title">
+      <h1>רשימת קורסים</h1>
+    </div>
+
+    <p class="page-description">כאן תוכל למצוא את כל הקורסים שלך לסמסטר הנוכחי ולסמסטרים הקרובים.</p>
+
+    <div class="controls">
+      <div class="search-filter">
+        <div class="search-bar">
+          <input type="text" placeholder="חיפוש קורס לפי שם או מרצה...">
+          <span class="search-icon">🔍</span>
+        </div>
+        
+        <div class="filter-dropdown">
+          <select>
+            <option value="">סמסטר - הכל</option>
+            <option value="spring-2025" selected>אביב 2025</option>
+            <option value="summer-2025">קיץ 2025</option>
+            <option value="fall-2025">סתיו 2025</option>
+          </select>
+        </div>
+        
+        <div class="filter-dropdown">
+          <select>
+            <option value="">סטטוס - הכל</option>
+            <option value="upcoming">קורסים קרובים</option>
+            <option value="active" selected>קורסים פעילים</option>
+            <option value="completed">קורסים שהושלמו</option>
+          </select>
+        </div>
+      </div>
+      
+      <button class="btn btn-outline">
+        <span>↓</span>
+        ייצוא לקובץ
+      </button>
+    </div>
+
+    <div class="course-grid">
+      <!-- קורס 1 -->
+      <div class="course-card active-course">
+        <div class="course-header">
+          <h3 class="course-title">DSS ,2927 מבוא לכריית נתונים ובינה עסקית</h3>
+          <div class="course-instructor">
+            <span>👨‍🏫</span>
+            <span>ד"ר מאיר עמיצור</span>
+          </div>
+          <span class="course-tag">פעיל</span>
+        </div>
+        <div class="course-body">
+          <div class="course-details">
+            <div class="detail-item">
+              <span class="detail-label">יום</span>
+              <span class="detail-value">שלישי</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">שעות</span>
+              <span class="detail-value">16:45-19:00</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">סמסטר</span>
+              <span class="detail-value">א'</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">כיתה</span>
+              <span class="detail-value">מתוקשב (אונליין)</span>
+            </div>
+          </div>
+          <div class="course-status">
+            <span class="status-icon">✓</span>
+            <span>השיעור הבא: יום שלישי, 19/03/2025</span>
+          </div>
+          <div class="course-description">
+            הקורס עוסק בשיטות לכריית נתונים ובינה עסקית, כולל מודלים חיזוי וניתוח מגמות.
+            <div class="file-types">
+              <span class="file-type">DOC</span>
+              <span class="file-type">XLSX</span>
+              <span class="file-type">PDF</span>
+            </div>
+          </div>
+        </div>
+        <div class="course-footer">
+          <div class="course-badges">
+            <span class="badge badge-info">הודעות חדשות: 2</span>
+            <span class="badge badge-warning">מטלות: 1</span>
+          </div>
+          <button class="btn btn-primary btn-sm">כניסה לקורס</button>
+        </div>
+      </div>
+      
+      <!-- קורס 2 -->
+      <div class="course-card active-course">
+        <div class="course-header">
+          <h3 class="course-title">SQL 3069 בסיסי נתונים ו</h3>
+          <div class="course-instructor">
+            <span>👨‍🏫</span>
+            <span>פרופ' טל בן-אופיר</span>
+          </div>
+          <span class="course-tag">פעיל</span>
+        </div>
+        <div class="course-body">
+          <div class="course-details">
+            <div class="detail-item">
+              <span class="detail-label">יום</span>
+              <span class="detail-value">חמישי</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">שעות</span>
+              <span class="detail-value">19:15-22:15</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">סמסטר</span>
+              <span class="detail-value">א'</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">כיתה</span>
+              <span class="detail-value">בניין 3, כיתה 205</span>
+            </div>
+          </div>
+          <div class="course-status">
+            <span class="status-icon">✓</span>
+            <span>השיעור הבא: יום חמישי, 14/03/2025</span>
+          </div>
+          <div class="course-description">
+            הקורס מקנה ידע בסיסי בתכנון ובניית בסיסי נתונים ושפת SQL לשאילתות מתקדמות.
+            <div class="file-types">
+              <span class="file-type">SQL</span>
+              <span class="file-type">PDF</span>
+            </div>
+          </div>
+        </div>
+        <div class="course-footer">
+          <div class="course-badges">
+            <span class="badge badge-info">הודעות חדשות: 1</span>
+            <span class="badge badge-warning">מטלות: 2</span>
+          </div>
+          <button class="btn btn-primary btn-sm">כניסה לקורס</button>
+        </div>
+      </div>
+      
+      <!-- קורס 3 -->
+      <div class="course-card active-course">
+        <div class="course-header">
+          <h3 class="course-title">UI 3095 עיצוב ממשק משתמש</h3>
+          <div class="course-instructor">
+            <span>👩‍🏫</span>
+            <span>ד"ר מיכל סלע</span>
+          </div>
+          <span class="course-tag">פעיל</span>
+        </div>
+        <div class="course-body">
+          <div class="course-details">
+            <div class="detail-item">
+              <span class="detail-label">יום</span>
+              <span class="detail-value">שישי</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">שעות</span>
+              <span class="detail-value">16:30-18:45</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">סמסטר</span>
+              <span class="detail-value">א'</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">כיתה</span>
+              <span class="detail-value">בניין 5, סטודיו עיצוב</span>
+            </div>
+          </div>
+          <div class="course-status">
+            <span class="status-icon">✓</span>
+            <span>השיעור הבא: יום שישי, 15/03/2025</span>
+          </div>
+          <div class="course-description">
+            הקורס מקנה ידע עיוני ומעשי בעיצוב ממשקי משתמש ידידותיים, כולל פרקטיקות מיטביות.
+            <div class="file-types">
+              <span class="file-type">PSD</span>
+              <span class="file-type">AI</span>
+              <span class="file-type">PDF</span>
+            </div>
+          </div>
+        </div>
+        <div class="course-footer">
+          <div class="course-badges">
+            <span class="badge badge-info">הודעות חדשות: 0</span>
+            <span class="badge badge-warning">מטלות: 3</span>
+          </div>
+          <button class="btn btn-primary btn-sm">כניסה לקורס</button>
+        </div>
+      </div>
+      
+      <!-- קורס 4 -->
+      <div class="course-card active-course">
+        <div class="course-header">
+          <h3 class="course-title">ERP 3071 התאמת מערכות תוכנה ארגון</h3>
+          <div class="course-instructor">
+            <span>👨‍🏫</span>
+            <span>ד"ר דניאל רוז</span>
+          </div>
+          <span class="course-tag">פעיל</span>
+        </div>
+        <div class="course-body">
+          <div class="course-details">
+            <div class="detail-item">
+              <span class="detail-label">יום</span>
+              <span class="detail-value">שלישי</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">שעות</span>
+              <span class="detail-value">16:00-19:15</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">סמסטר</span>
+              <span class="detail-value">ב'</span>
+            </div>
+            <div class="detail-item">
+              <span class="detail-label">כיתה</span>
+              <span class="detail-value">בניין 2, מעבדה 302</span>
+            </div>
+          </div>
+          <div class="course-status">
+            <span class="status-icon">✓</span>
+            <span>השיעור הבא: יום שלישי, 19/03/2025</span>
+          </div>
+          <div class="course-description">
+            הקורס עוסק בהתאמה והטמעה של מערכות ERP בארגונים, תוך התמקדות בפתרונות מובילים.
+          </div>
+        </div>
+        <div class="course-footer">
+          <div class="course-badges">
+            <span class="badge badge-info">הודעות חדשות: 3</span>
+            <span class="badge badge-warning">מטלות: 

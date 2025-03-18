@@ -1,0 +1,1072 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ono Academic College - Course Detail Page</title>
+  <style>
+    :root {
+      --primary: #6ab04c;
+      --primary-light: #8ed270;
+      --primary-dark: #5a9a3d;
+      --secondary: #4b7bec;
+      --secondary-light: #6392f0;
+      --secondary-dark: #3867d6;
+      --accent: #fc5c65;
+      --accent-light: #fd9ea3;
+      --warning: #f0932b;
+      --warning-light: #f8c291;
+      --danger: #eb4d4b;
+      --success: #6ab04c;
+      --info: #4b7bec;
+      --light: #f9fafc;
+      --dark: #2d3436;
+      --gray: #95a5a6;
+      --gray-light: #dfe6e9;
+      --gray-dark: #636e72;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+      --shadow: 0 4px 6px rgba(0,0,0,0.04), 0 1px 3px rgba(0,0,0,0.08);
+      --shadow-lg: 0 10px 15px rgba(0,0,0,0.05), 0 4px 6px rgba(0,0,0,0.05);
+      --radius: 8px;
+      --radius-lg: 12px;
+      --transition: all 0.3s ease;
+      
+      --course-fe: #f1c40f;
+      --course-fe-light: rgba(241, 196, 15, 0.1);
+      --course-fe-medium: rgba(241, 196, 15, 0.5);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
+    }
+
+    body {
+      background-color: var(--light);
+      color: var(--dark);
+      line-height: 1.6;
+    }
+
+    header {
+      background-color: white;
+      box-shadow: var(--shadow);
+      padding: 0.75rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .logo {
+      height: 50px;
+    }
+
+    .logo-text {
+      font-weight: 600;
+      font-size: 1.2rem;
+      color: var(--primary-dark);
+    }
+
+    .user-menu {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.5rem 0.75rem;
+      border-radius: var(--radius);
+      transition: var(--transition);
+      cursor: pointer;
+    }
+
+    .user-info:hover {
+      background-color: var(--gray-light);
+    }
+
+    .user-avatar {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background-color: var(--secondary);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+
+    .user-details {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .user-name {
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    .user-role {
+      font-size: 0.8rem;
+      color: var(--gray);
+    }
+
+    .icon-button {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: var(--transition);
+      position: relative;
+      background-color: transparent;
+    }
+
+    .icon-button:hover {
+      background-color: var(--gray-light);
+    }
+    
+    .notification-count {
+      position: absolute;
+      top: -2px;
+      right: -2px;
+      background-color: var(--accent);
+      color: white;
+      font-size: 0.7rem;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    nav {
+      background-color: white;
+      padding: 0 2rem;
+      border-bottom: 1px solid var(--gray-light);
+    }
+
+    .nav-container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 0.5rem;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--dark);
+      font-weight: 500;
+      padding: 1rem 1.25rem;
+      display: block;
+      border-bottom: 3px solid transparent;
+      transition: var(--transition);
+    }
+
+    .nav-links a:hover {
+      color: var(--primary);
+    }
+
+    .nav-links a.active {
+      color: var(--primary);
+      border-bottom: 3px solid var(--primary);
+    }
+
+    main {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    .breadcrumbs {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+      color: var(--gray);
+      font-size: 0.9rem;
+      align-items: center;
+    }
+
+    .breadcrumbs a {
+      color: var(--gray-dark);
+      text-decoration: none;
+    }
+
+    .breadcrumbs a:hover {
+      color: var(--primary);
+      text-decoration: underline;
+    }
+
+    .course-header {
+      background-color: white;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow);
+      margin-bottom: 2rem;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .course-header-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image: radial-gradient(circle at top right, var(--course-fe) 0%, transparent 70%);
+      opacity: 0.05;
+      z-index: 0;
+    }
+
+    .course-header-content {
+      padding: 2rem;
+      position: relative;
+      z-index: 1;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .course-title-section {
+      flex: 1;
+    }
+
+    .course-code {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      border-radius: 30px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      background-color: var(--course-fe);
+      color: white;
+      margin-bottom: 1rem;
+    }
+
+    .course-title {
+      font-size: 1.75rem;
+      margin-bottom: 0.75rem;
+      color: var(--dark);
+    }
+
+    .course-meta {
+      display: flex;
+      gap: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.95rem;
+      color: var(--gray-dark);
+    }
+
+    .meta-icon {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background-color: var(--course-fe-light);
+      color: var(--course-fe);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .course-description {
+      max-width: 700px;
+      color: var(--gray-dark);
+    }
+
+    .course-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      min-width: 200px;
+    }
+
+    .btn {
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: var(--radius);
+      cursor: pointer;
+      font-weight: 500;
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      font-size: 0.95rem;
+      text-align: center;
+    }
+
+    .btn-primary {
+      background-color: var(--primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background-color: var(--primary-dark);
+    }
+
+    .btn-outline {
+      background-color: transparent;
+      border: 1px solid var(--gray);
+      color: var(--gray-dark);
+    }
+
+    .btn-outline:hover {
+      background-color: var(--gray-light);
+    }
+
+    .btn-fe {
+      background-color: var(--course-fe);
+      color: white;
+    }
+
+    .btn-fe:hover {
+      background-color: #f39c12;
+    }
+
+    .content-grid {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 2rem;
+    }
+
+    .main-content {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .card {
+      background-color: white;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .card-header {
+      padding: 1.25rem;
+      border-bottom: 1px solid var(--gray-light);
+      font-weight: 600;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .card-title {
+      font-size: 1.1rem;
+      color: var(--dark);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .card-title-icon {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background-color: var(--primary-light);
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+    }
+
+    .card-body {
+      padding: 1.25rem;
+    }
+
+    .section-title {
+      margin-bottom: 1rem;
+      color: var(--dark);
+      font-weight: 600;
+      font-size: 1.2rem;
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .section-title-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background-color: var(--course-fe-light);
+      color: var(--course-fe);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .intro-text {
+      background-color: rgba(241, 196, 15, 0.05);
+      border-right: 4px solid var(--course-fe);
+      padding: 1.25rem;
+      border-radius: var(--radius);
+      margin-bottom: 1.5rem;
+    }
+
+    .video-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1rem;
+    }
+
+    .video-card {
+      background-color: white;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-sm);
+      overflow: hidden;
+      transition: var(--transition);
+    }
+
+    .video-card:hover {
+      box-shadow: var(--shadow);
+      transform: translateY(-3px);
+    }
+
+    .video-thumbnail {
+      position: relative;
+      padding-top: 56.25%; /* 16:9 Aspect Ratio */
+      background-color: #000;
+      border-radius: var(--radius) var(--radius) 0 0;
+      overflow: hidden;
+    }
+
+    .video-thumbnail img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .play-icon {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 60px;
+      height: 60px;
+      background-color: rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .play-icon:hover {
+      background-color: rgba(255, 255, 255, 0.3);
+      transform: translate(-50%, -50%) scale(1.1);
+    }
+
+    .video-info {
+      padding: 1rem;
+    }
+
+    .video-title {
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      font-size: 1rem;
+    }
+
+    .video-meta {
+      display: flex;
+      justify-content: space-between;
+      color: var(--gray);
+      font-size: 0.85rem;
+    }
+
+    .material-section {
+      margin-top: 2rem;
+    }
+
+    .material-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+
+    .material-card {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem;
+      background-color: white;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition);
+    }
+
+    .material-card:hover {
+      box-shadow: var(--shadow);
+      transform: translateY(-2px);
+    }
+
+    .material-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      background-color: var(--course-fe-light);
+      color: var(--course-fe);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+    }
+
+    .material-info {
+      flex: 1;
+    }
+
+    .material-title {
+      font-weight: 500;
+      margin-bottom: 0.25rem;
+    }
+
+    .material-meta {
+      color: var(--gray);
+      font-size: 0.85rem;
+    }
+
+    .download-btn {
+      padding: 0.5rem;
+      background-color: var(--gray-light);
+      color: var(--gray-dark);
+      border-radius: 4px;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .download-btn:hover {
+      background-color: var(--primary-light);
+      color: var(--primary-dark);
+    }
+
+    .assignment-section {
+      margin-top: 2rem;
+    }
+
+    .assignment-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .assignment-card {
+      position: relative;
+      background-color: white;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-sm);
+      overflow: hidden;
+      transition: var(--transition);
+    }
+
+    .assignment-card:hover {
+      box-shadow: var(--shadow);
+    }
+
+    .assignment-status {
+      position: absolute;
+      top: 0.75rem;
+      left: 0.75rem;
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 500;
+    }
+
+    .status-pending {
+      background-color: var(--warning-light);
+      color: var(--warning);
+    }
+
+    .status-completed {
+      background-color: var(--primary-light);
+      color: var(--primary-dark);
+    }
+
+    .assignment-content {
+      padding: 1.25rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .assignment-info {
+      flex: 1;
+    }
+
+    .assignment-title {
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+      font-size: 1.05rem;
+    }
+
+    .assignment-meta {
+      display: flex;
+      gap: 1.5rem;
+      margin-top: 0.5rem;
+      color: var(--gray-dark);
+      font-size: 0.9rem;
+    }
+
+    .meta-date {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    .progress-bar {
+      height: 6px;
+      background-color: var(--gray-light);
+      border-radius: 3px;
+      margin-top: 1rem;
+      overflow: hidden;
+    }
+
+    .progress-value {
+      height: 100%;
+      border-radius: 3px;
+    }
+
+    .progress-pending {
+      background-color: var(--warning);
+      width: 0%;
+    }
+
+    .progress-started {
+      background-color: var(--warning);
+      width: 30%;
+    }
+
+    .progress-completed {
+      background-color: var(--primary);
+      width: 100%;
+    }
+
+    .upcoming-class-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .upcoming-class {
+      background-color: rgba(241, 196, 15, 0.05);
+      border-right: 3px solid var(--course-fe);
+      padding: 1rem;
+      border-radius: var(--radius);
+    }
+
+    .upcoming-date {
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+      color: var(--course-fe);
+    }
+
+    .upcoming-time {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.9rem;
+      color: var(--gray-dark);
+    }
+
+    .materials-and-tools {
+      margin-top: 1rem;
+    }
+
+    .tool-link {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem;
+      background-color: white;
+      border-radius: var(--radius);
+      margin-bottom: 0.75rem;
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition);
+      cursor: pointer;
+      text-decoration: none;
+      color: var(--dark);
+    }
+
+    .tool-link:hover {
+      box-shadow: var(--shadow);
+      transform: translateY(-2px);
+    }
+
+    .tool-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background-color: var(--course-fe-light);
+      color: var(--course-fe);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+    }
+    
+    .reading-list {
+      margin-top: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .reading-item {
+      background-color: white;
+      border-radius: var(--radius);
+      padding: 0.75rem;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+    }
+
+    .reading-icon {
+      font-size: 1.25rem;
+      color: var(--course-fe);
+      margin-top: 0.2rem;
+    }
+
+    .reading-title {
+      font-weight: 500;
+      margin-bottom: 0.25rem;
+      font-size: 0.95rem;
+    }
+
+    .reading-author {
+      font-size: 0.85rem;
+      color: var(--gray);
+    }
+
+    .footer {
+      text-align: center;
+      padding: 2rem 0;
+      background-color: white;
+      margin-top: 3rem;
+      border-top: 1px solid var(--gray-light);
+      color: var(--gray);
+      font-size: 0.9rem;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-top: 1rem;
+    }
+
+    .footer-links a {
+      color: var(--gray-dark);
+      text-decoration: none;
+    }
+
+    .footer-links a:hover {
+      color: var(--primary);
+      text-decoration: underline;
+    }
+
+    @media (max-width: 1024px) {
+      .content-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .course-header-content {
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+      
+      .course-actions {
+        flex-direction: row;
+        flex-wrap: wrap;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .video-container {
+        grid-template-columns: 1fr;
+      }
+      
+      .course-meta {
+        flex-direction: column;
+        gap: 0.75rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo-container">
+      <img src="/api/placeholder/150/50" alt="Ono Academic College Logo" class="logo" />
+      <span class="logo-text">פורטל הסטודנטים</span>
+    </div>
+    <div class="user-menu">
+      <div class="icon-button">
+        <span>🔍</span>
+      </div>
+      <div class="icon-button">
+        <span>🔔</span>
+        <span class="notification-count">3</span>
+      </div>
+      <div class="user-info">
+        <div class="user-avatar">ט</div>
+        <div class="user-details">
+          <span class="user-name">טל ישראלי</span>
+          <span class="user-role">סטודנט לתואר שני</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <nav>
+    <div class="nav-container">
+      <ul class="nav-links">
+        <li><a href="#">דף הבית</a></li>
+        <li><a href="#">מידע אישי</a></li>
+        <li><a href="#" class="active">קורסים</a></li>
+        <li><a href="#">מערכת שעות</a></li>
+        <li><a href="#">בחינות וציונים</a></li>
+        <li><a href="#">ספרייה</a></li>
+        <li><a href="#">תשלומים</a></li>
+        <li><a href="#">אירועים</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+    <div class="breadcrumbs">
+      <a href="#">ראשי</a>
+      <span>›</span>
+      <a href="#">קורסים</a>
+      <span>›</span>
+      <span>פרויקט מסכם FE</span>
+    </div>
+
+    <div class="course-header">
+      <div class="course-header-bg"></div>
+      <div class="course-header-content">
+        <div class="course-title-section">
+          <span class="course-code">4072</span>
+          <h1 class="course-title">פרויקט מסכם FE</h1>
+          <div class="course-meta">
+            <div class="meta-item">
+              <span class="meta-icon">👨‍🏫</span>
+              <span>ד"ר גבי חזות</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-icon">📅</span>
+              <span>יום שלישי, 19:45-22:00</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-icon">📍</span>
+              <span>בניין 4, סטודיו עיצוב</span>
+            </div>
+          </div>
+          <p class="course-description">
+            פרויקט מסכם מעשי בו הסטודנטים מיישמים את הידע שנרכש לאורך התואר בפרויקט פיתוח אתר ויישומי פרונט-אנד מקיף. הקורס מתמקד ביישום פרקטי של טכנולוגיות וכלים מתקדמים.
+          </p>
+        </div>
+        <div class="course-actions">
+          <a href="#" class="btn btn-fe">
+            <span>📝</span>
+            הגשת עבודה
+          </a>
+          <a href="#" class="btn btn-outline">
+            <span>📊</span>
+            צפייה בציונים
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-grid">
+      <div class="main-content">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">
+              <div class="card-title-icon">📢</div>
+              הודעות מהקורס
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="intro-text">
+              <p>סטודנטים יקרים, ברוכים הבאים לקורס פרויקט מסכם FE. כאן תוכלו למצוא את כל ההרצאות המוקלטות, חומרי הלימוד והמטלות לקורס. אנא שימו לב לתאריכי ההגשה ולעדכונים השוטפים.</p>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <h2 class="section-title">
+            <span class="section-title-icon">🎬</span>
+            סרטוני עזר לאתר פרויקט מסכם FE
+          </h2>
+          <div class="video-container">
+            <div class="video-card">
+              <div class="video-thumbnail">
+                <img src="/api/placeholder/400/225" alt="סרטון עזר" />
+                <div class="play-icon">▶</div>
+              </div>
+              <div class="video-info">
+                <h3 class="video-title">סרטון עזר לאתר פרויקט מסכם</h3>
+                <div class="video-meta">
+                  <span>11/03/2025</span>
+                  <span>19:45 • 11:00 דקות</span>
+                </div>
+              </div>
+            </div>
+            <div class="video-card">
+              <div class="video-thumbnail">
+                <img src="/api/placeholder/400/225" alt="סרטון עזר" />
+                <div class="play-icon">▶</div>
+              </div>
+              <div class="video-info">
+                <h3 class="video-title">סרטון עזר לאתר פרויקט מסכם</h3>
+                <div class="video-meta">
+                  <span>04/03/2025</span>
+                  <span>19:45 • 9:00 דקות</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="assignment-section">
+          <h2 class="section-title">
+            <span class="section-title-icon">📝</span>
+            מטלות ועבודות
+          </h2>
+          <div class="assignment-list">
+            <div class="assignment-card">
+              <span class="assignment-status status-completed">הוגש</span>
+              <div class="assignment-content">
+                <div class="assignment-info">
+                  <h3 class="assignment-title">הגשת תכנון ראשוני לפרויקט מסכם</h3>
+                  <p>תיאור קצר של הפרויקט, מטרות, ארכיטקטורה מתוכננת וטכנולוגיות נבחרות</p>
+                  <div class="assignment-meta">
+                    <div class="meta-date">📅 תאריך הגשה: 01/03/2025</div>
+                    <div class="meta-date">⏱ הוגש ב: 28/02/2025</div>
+                  </div>
+                  <div class="progress-bar">
+                    <div class="progress-value progress-completed"></div>
+                  </div>
+                </div>
+                <a href="#" class="btn btn-outline">צפייה בהגשה</a>
+              </div>
+            </div>
+            
+            <div class="assignment-card">
+              <span class="assignment-status status-pending">בתהליך</span>
+              <div class="assignment-content">
+                <div class="assignment-info">
+                  <h3 class="assignment-title">הגשת ממשק משתמש ראשוני</h3>
+                  <p>מסכים ראשוניים של הפרויקט, עיצוב, רכיבים עיקריים ומבנה כללי</p>
+                  <div class="assignment-meta">
+                    <div class="meta-date">📅 תאריך הגשה: 15/03/2025</div>
+                    <div class="meta-date">⚠️ נותרו: 7 ימים</div>
+                  </div>
+                  <div class="progress-bar">
+                    <div class="progress-value progress-started"></div>
+                  </div>
+                </div>
+                <a href="#" class="btn btn-fe">הגשה</a>
+              </div>
+            </div>
+            
+            <div class="assignment-card">
+              <span class="assignment-status status-pending">טרם התחיל</span>
+              <div class="assignment-content">
+                <div class="assignment-info">
+                  <h3 class="assignment-title">הגשת קוד מקור סופי ומסמך תיעוד</h3>
+                  <p>קוד הפרויקט המלא, הוראות התקנה והפעלה, תיעוד API ומדריך למשתמש</p>
+                  <div class="assignment-meta">
+                    <div class="meta-date">📅 תאריך הגשה: 10/04/2025</div>
+                    <div class="meta-date">⏱ נותרו: 33 ימים</div>
+                  </div>
+                  <div class="progress-bar">
+                    <div class="progress-value progress-pending"></div>
+                  </div>
+                </div>
+                <a href="#" class="btn btn-outline">פרטים</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="material-section">
+          <h2 class="section-title">
+            <span class="section-title-icon">📚</span>
+            חומרי לימוד
+          </h2>
+          <div class="material-list">
+            <div class="material-card">
+              <div class="material-icon">📄</div>
+              <div class="material-info">
+                <h3 class="material-title">מצגת קורס - מבוא לפרויקט מסכם</h3>
+                <div class="material-meta">PDF • 2.4MB • 15/02/2025</div>
+              </div>
+              <div class="download-btn">⬇️</div>
+            </div>
+            <div class="material-card">
+              <div class="material-icon">📄</div>
+              <div class="material-info">
+                <h3 class="material-title">מדריך React & CSS</h3>
+                <div class="material-meta">PDF • 3.5MB • 01/03/2025</div>
+              </div>
+              <div class="download-btn">⬇️</div>
+            </div>
+            <div class="material-card">
+              <div class="material-icon">📄</div>
+              <div class="material-info">
+                <h3 class="material-title">דוגמאות קוד ותבניות</h3>
+                <div class="material-meta">ZIP • 5.2MB • 05/03/2025</div>
+              </div>
+              <div class="download-btn">⬇️</div>
+            </div>
+            <div class="material-card">
+              <div class="material-icon">📄</div>
+              <div class="material-info">
+                <h3 class="material-title">הנחיות לפרויקט מסכם</h3>
+                <div class="material-meta">DOCX • 1.8MB • 22/02/2025</div>
+              </div>
+              <div class="download-btn">⬇️</div>
+            

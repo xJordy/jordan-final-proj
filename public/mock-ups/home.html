@@ -1,0 +1,1086 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ono Academic College - Student Portal</title>
+  <style>
+    :root {
+      --primary: #6ab04c;
+      --primary-light: #8ed270;
+      --primary-dark: #5a9a3d;
+      --secondary: #4b7bec;
+      --secondary-light: #6392f0;
+      --secondary-dark: #3867d6;
+      --accent: #fc5c65;
+      --light: #f9fafc;
+      --dark: #2d3436;
+      --gray: #95a5a6;
+      --gray-light: #dfe6e9;
+      --gray-dark: #636e72;
+      --danger: #eb4d4b;
+      --warning: #f0932b;
+      --success: #6ab04c;
+      --info: #4b7bec;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+      --shadow: 0 4px 6px rgba(0,0,0,0.04), 0 1px 3px rgba(0,0,0,0.08);
+      --shadow-lg: 0 10px 15px rgba(0,0,0,0.05), 0 4px 6px rgba(0,0,0,0.05);
+      --radius: 8px;
+      --radius-lg: 12px;
+      --transition: all 0.3s ease;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
+    }
+
+    body {
+      background-color: var(--light);
+      color: var(--dark);
+      line-height: 1.6;
+    }
+
+    header {
+      background-color: white;
+      box-shadow: var(--shadow);
+      padding: 0.75rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .logo {
+      height: 50px;
+    }
+
+    .logo-text {
+      font-weight: 600;
+      font-size: 1.2rem;
+      color: var(--primary-dark);
+    }
+
+    .user-menu {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.5rem 0.75rem;
+      border-radius: var(--radius);
+      transition: var(--transition);
+      cursor: pointer;
+    }
+
+    .user-info:hover {
+      background-color: var(--gray-light);
+    }
+
+    .user-avatar {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background-color: var(--secondary);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+
+    .user-details {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .user-name {
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    .user-role {
+      font-size: 0.8rem;
+      color: var(--gray);
+    }
+
+    .icon-button {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: var(--transition);
+      position: relative;
+      background-color: transparent;
+    }
+
+    .icon-button:hover {
+      background-color: var(--gray-light);
+    }
+
+    nav {
+      background-color: white;
+      padding: 0 2rem;
+      border-bottom: 1px solid var(--gray-light);
+    }
+
+    .nav-container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 0.5rem;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--dark);
+      font-weight: 500;
+      padding: 1rem 1.25rem;
+      display: block;
+      border-bottom: 3px solid transparent;
+      transition: var(--transition);
+    }
+
+    .nav-links a:hover {
+      color: var(--primary);
+    }
+
+    .nav-links a.active {
+      color: var(--primary);
+      border-bottom: 3px solid var(--primary);
+    }
+
+    main {
+      padding: 2rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .breadcrumbs {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+      color: var(--gray);
+      font-size: 0.9rem;
+      align-items: center;
+    }
+
+    .breadcrumbs a {
+      color: var(--gray-dark);
+      text-decoration: none;
+    }
+
+    .breadcrumbs a:hover {
+      color: var(--primary);
+      text-decoration: underline;
+    }
+
+    .dashboard {
+      display: grid;
+      grid-template-columns: 7fr 3fr;
+      gap: 2rem;
+    }
+
+    .page-title {
+      margin-bottom: 1.5rem;
+      font-size: 1.75rem;
+      font-weight: 600;
+      color: var(--dark);
+    }
+
+    .welcome-message {
+      margin-bottom: 2rem;
+      color: var(--gray-dark);
+    }
+
+    .card {
+      background-color: white;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      margin-bottom: 2rem;
+      transition: var(--transition);
+    }
+
+    .card:hover {
+      box-shadow: var(--shadow-lg);
+    }
+
+    .card-header {
+      padding: 1.25rem 1.5rem;
+      border-bottom: 1px solid var(--gray-light);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .card-title {
+      font-size: 1.2rem;
+      color: var(--dark);
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .card-title-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background-color: var(--primary-light);
+      color: var(--primary-dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+    }
+
+    .card-body {
+      padding: 1.5rem;
+    }
+
+    .alert {
+      background-color: rgba(240, 147, 43, 0.1);
+      border-right: 4px solid var(--warning);
+      padding: 1rem 1.5rem;
+      margin-bottom: 2rem;
+      border-radius: var(--radius);
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+
+    .alert-icon {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background-color: var(--warning);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .alert-content {
+      flex: 1;
+    }
+
+    .alert-title {
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+
+    .btn {
+      padding: 0.6rem 1.25rem;
+      border: none;
+      border-radius: var(--radius);
+      cursor: pointer;
+      font-weight: 500;
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.95rem;
+    }
+
+    .btn-primary {
+      background-color: var(--primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background-color: var(--primary-dark);
+    }
+
+    .btn-outline {
+      background-color: transparent;
+      border: 1px solid var(--primary);
+      color: var(--primary);
+    }
+
+    .btn-outline:hover {
+      background-color: var(--primary);
+      color: white;
+    }
+
+    .btn-sm {
+      padding: 0.4rem 0.75rem;
+      font-size: 0.85rem;
+    }
+
+    .btn-icon {
+      width: 18px;
+      height: 18px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      padding: 1rem 1.25rem;
+      text-align: right;
+    }
+
+    th {
+      background-color: var(--gray-light);
+      font-weight: 600;
+      color: var(--gray-dark);
+    }
+
+    tr {
+      border-bottom: 1px solid var(--gray-light);
+    }
+
+    tr:last-child {
+      border-bottom: none;
+    }
+
+    tr:hover {
+      background-color: #f8f9fa;
+    }
+
+    .table-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .icon-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap: 1.25rem;
+      margin-top: 0.5rem;
+    }
+
+    .icon-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 1.25rem 0.75rem;
+      border-radius: var(--radius);
+      transition: var(--transition);
+      cursor: pointer;
+    }
+
+    .icon-item:hover {
+      background-color: var(--gray-light);
+      transform: translateY(-3px);
+    }
+
+    .icon {
+      width: 52px;
+      height: 52px;
+      background-color: var(--primary-light);
+      border-radius: 30%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 0.75rem;
+      color: var(--primary-dark);
+      font-size: 1.5rem;
+      transition: var(--transition);
+    }
+
+    .icon-item:hover .icon {
+      background-color: var(--primary);
+      color: white;
+    }
+
+    .icon-text {
+      font-weight: 500;
+      font-size: 0.9rem;
+    }
+
+    .search-bar {
+      display: flex;
+      margin-bottom: 1.5rem;
+      position: relative;
+    }
+
+    .search-bar input {
+      flex: 1;
+      padding: 0.75rem 1.25rem 0.75rem 3rem;
+      border: 1px solid var(--gray-light);
+      border-radius: var(--radius);
+      outline: none;
+      transition: var(--transition);
+      font-size: 0.95rem;
+    }
+
+    .search-bar input:focus {
+      border-color: var(--primary-light);
+      box-shadow: 0 0 0 3px rgba(106, 176, 76, 0.15);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--gray);
+    }
+
+    .notification-count {
+      position: absolute;
+      top: -2px;
+      right: -2px;
+      background-color: var(--accent);
+      color: white;
+      font-size: 0.7rem;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .upcoming-class {
+      border-right: 4px solid var(--primary);
+      background-color: #f8f9fa;
+      padding: 1rem 1.25rem;
+      margin-bottom: 1rem;
+      border-radius: var(--radius);
+      transition: var(--transition);
+      position: relative;
+    }
+
+    .upcoming-class:hover {
+      transform: translateX(-5px);
+      background-color: white;
+      box-shadow: var(--shadow);
+    }
+
+    .upcoming-class-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 0.5rem;
+    }
+
+    .upcoming-class h3 {
+      font-size: 1.05rem;
+      margin-bottom: 0.25rem;
+      font-weight: 600;
+    }
+
+    .upcoming-class-info {
+      display: flex;
+      gap: 1.5rem;
+      color: var(--gray-dark);
+      font-size: 0.9rem;
+    }
+
+    .upcoming-class-info span {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    .tag {
+      font-size: 0.75rem;
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      font-weight: 500;
+    }
+
+    .tag-primary {
+      background-color: rgba(106, 176, 76, 0.15);
+      color: var(--primary-dark);
+    }
+
+    .tag-warning {
+      background-color: rgba(240, 147, 43, 0.15);
+      color: var(--warning);
+    }
+
+    .tag-info {
+      background-color: rgba(75, 123, 236, 0.15);
+      color: var(--secondary-dark);
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.25rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .stat-card {
+      background: white;
+      padding: 1.25rem;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      transition: var(--transition);
+    }
+
+    .stat-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow);
+    }
+
+    .stat-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+    }
+
+    .stat-primary {
+      background-color: rgba(106, 176, 76, 0.15);
+      color: var(--primary-dark);
+    }
+
+    .stat-info {
+      background-color: rgba(75, 123, 236, 0.15);
+      color: var(--secondary-dark);
+    }
+
+    .stat-warning {
+      background-color: rgba(240, 147, 43, 0.15);
+      color: var(--warning);
+    }
+
+    .stat-danger {
+      background-color: rgba(235, 77, 75, 0.15);
+      color: var(--danger);
+    }
+
+    .stat-content {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .stat-value {
+      font-size: 1.5rem;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    .stat-label {
+      font-size: 0.85rem;
+      color: var(--gray);
+    }
+
+    .calendar-item {
+      display: flex;
+      gap: 1rem;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid var(--gray-light);
+    }
+
+    .calendar-item:last-child {
+      border-bottom: none;
+    }
+
+    .calendar-date {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 48px;
+      height: 48px;
+      background-color: var(--secondary-light);
+      color: white;
+      border-radius: 8px;
+      font-weight: 600;
+    }
+
+    .calendar-day {
+      font-size: 1.1rem;
+      line-height: 1;
+    }
+
+    .calendar-month {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+    }
+
+    .calendar-content h4 {
+      font-size: 0.95rem;
+      margin-bottom: 0.25rem;
+      font-weight: 600;
+    }
+
+    .calendar-content p {
+      font-size: 0.85rem;
+      color: var(--gray);
+    }
+
+    .progress-bar {
+      height: 8px;
+      background-color: var(--gray-light);
+      border-radius: 4px;
+      overflow: hidden;
+      margin-top: 0.5rem;
+    }
+
+    .progress-value {
+      height: 100%;
+      background-color: var(--primary);
+      border-radius: 4px;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 2rem 0;
+      background-color: white;
+      margin-top: 3rem;
+      border-top: 1px solid var(--gray-light);
+      color: var(--gray);
+      font-size: 0.9rem;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-top: 1rem;
+    }
+
+    .footer-links a {
+      color: var(--gray-dark);
+      text-decoration: none;
+    }
+
+    .footer-links a:hover {
+      color: var(--primary);
+      text-decoration: underline;
+    }
+
+    @media (max-width: 1024px) {
+      .dashboard {
+        grid-template-columns: 1fr;
+      }
+      
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .nav-links {
+        overflow-x: auto;
+        padding-bottom: 0.5rem;
+      }
+      
+      .icon-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo-container">
+      <img src="/api/placeholder/150/50" alt="Ono Academic College Logo" class="logo" />
+      <span class="logo-text">פורטל הסטודנטים</span>
+    </div>
+    <div class="user-menu">
+      <div class="icon-button">
+        <span>🔍</span>
+      </div>
+      <div class="icon-button">
+        <span>🔔</span>
+        <span class="notification-count">3</span>
+      </div>
+      <div class="user-info">
+        <div class="user-avatar">ט</div>
+        <div class="user-details">
+          <span class="user-name">טל ישראלי</span>
+          <span class="user-role">סטודנט לתואר שני</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <nav>
+    <div class="nav-container">
+      <ul class="nav-links">
+        <li><a href="#" class="active">דף הבית</a></li>
+        <li><a href="#">מידע אישי</a></li>
+        <li><a href="#">קורסים</a></li>
+        <li><a href="#">מערכת שעות</a></li>
+        <li><a href="#">בחינות וציונים</a></li>
+        <li><a href="#">ספרייה</a></li>
+        <li><a href="#">תשלומים</a></li>
+        <li><a href="#">אירועים</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+    <div class="breadcrumbs">
+      <a href="#">ראשי</a>
+      <span>›</span>
+      <span>דף הבית</span>
+    </div>
+
+    <h1 class="page-title">שלום, טל!</h1>
+    <p class="welcome-message">ברוך הבא לפורטל הסטודנטים. כאן תוכל למצוא את כל המידע הנחוץ לך בלימודים.</p>
+
+    <div class="alert">
+      <div class="alert-icon">!</div>
+      <div class="alert-content">
+        <h3 class="alert-title">שימו לב - הודעה חשובה</h3>
+        <p>יום עיון בנושא "חדשנות בתעשייה" יתקיים ב-15.3 באולם המרכזי. הרשמה בפורטל הסטודנטים עד לתאריך 13.3.</p>
+      </div>
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon stat-primary">📚</div>
+        <div class="stat-content">
+          <div class="stat-value">8</div>
+          <div class="stat-label">קורסים פעילים</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon stat-info">📝</div>
+        <div class="stat-content">
+          <div class="stat-value">3</div>
+          <div class="stat-label">מטלות להגשה</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon stat-warning">📅</div>
+        <div class="stat-content">
+          <div class="stat-value">2</div>
+          <div class="stat-label">בחינות קרובות</div>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon stat-danger">🔔</div>
+        <div class="stat-content">
+          <div class="stat-value">5</div>
+          <div class="stat-label">הודעות חדשות</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dashboard">
+      <div class="main-content">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">
+              <div class="card-title-icon">📅</div>
+              שיעורים הקרובים
+            </div>
+            <button class="btn btn-outline btn-sm">
+              <span class="btn-icon">👁️</span>
+              לוח זמנים מלא
+            </button>
+          </div>
+          <div class="card-body">
+            <div class="upcoming-class">
+              <div class="upcoming-class-header">
+                <h3>סמינר מחקרי</h3>
+                <span class="tag tag-warning">היום</span>
+              </div>
+              <div class="upcoming-class-info">
+                <span>👨‍🏫 פרופ' כהן</span>
+                <span>🕒 16:15-17:45</span>
+                <span>📍 בניין 2, כיתה 305</span>
+              </div>
+            </div>
+            <div class="upcoming-class">
+              <div class="upcoming-class-header">
+                <h3>גישות לכתיבה מדעית</h3>
+                <span class="tag tag-primary">מחר</span>
+              </div>
+              <div class="upcoming-class-info">
+                <span>👨‍🏫 ד"ר לוי</span>
+                <span>🕒 10:00-11:30</span>
+                <span>📍 בניין 4, כיתה 201</span>
+              </div>
+            </div>
+            <div class="upcoming-class">
+              <div class="upcoming-class-header">
+                <h3>סדנת מחקר מתקדם</h3>
+                <span class="tag tag-info">יום ה'</span>
+              </div>
+              <div class="upcoming-class-info">
+                <span>👨‍🏫 פרופ' אברהם</span>
+                <span>🕒 12:30-14:00</span>
+                <span>📍 בניין 5, מעבדה 103</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">
+              <div class="card-title-icon">📋</div>
+              מטלות קרובות
+            </div>
+            <button class="btn btn-outline btn-sm">
+              <span class="btn-icon">👁️</span>
+              כל המטלות
+            </button>
+          </div>
+          <div class="card-body">
+            <table>
+              <tr>
+                <th style="width: 40%">שם המטלה</th>
+                <th style="width: 20%">קורס</th>
+                <th style="width: 20%">תאריך הגשה</th>
+                <th style="width: 20%">סטטוס</th>
+              </tr>
+              <tr>
+                <td>עבודת מחקר - סמסטר א'</td>
+                <td>שיטות מחקר</td>
+                <td>15/03/2025</td>
+                <td>
+                  <div>בתהליך</div>
+                  <div class="progress-bar">
+                    <div class="progress-value" style="width: 65%"></div>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>מצגת - נושאים מתקדמים</td>
+                <td>סמינר נושאי</td>
+                <td>18/03/2025</td>
+                <td>
+                  <div>בתהליך</div>
+                  <div class="progress-bar">
+                    <div class="progress-value" style="width: 30%"></div>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>תרגיל מסכם - פרק 4</td>
+                <td>סטטיסטיקה</td>
+                <td>22/03/2025</td>
+                <td>
+                  <div>טרם התחיל</div>
+                  <div class="progress-bar">
+                    <div class="progress-value" style="width: 0%"></div>
+                  </div>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">
+              <div class="card-title-icon">🔔</div>
+              הודעות מהמערכת
+            </div>
+            <button class="btn btn-outline btn-sm">
+              <span class="btn-icon">👁️</span>
+              כל ההודעות
+            </button>
+          </div>
+          <div class="card-body">
+            <table>
+              <tr>
+                <th style="width: 15%">תאריך</th>
+                <th style="width: 15%">מקור</th>
+                <th style="width: 55%">נושא</th>
+                <th style="width: 15%">פעולות</th>
+              </tr>
+              <tr>
+                <td>11/03/2025</td>
+                <td>מזכירות אקדמית</td>
+                <td>הזמנה לכנס שנתי בנושא חדשנות בתחום הטכנולוגיה</td>
+                <td><button class="btn btn-primary btn-sm">צפייה</button></td>
+              </tr>
+              <tr>
+                <td>10/03/2025</td>
+                <td>מדור בחינות</td>
+                <td>שינוי בלוח הבחינות - מועדי ב' סמסטר א'</td>
+                <td><button class="btn btn-primary btn-sm">צפייה</button></td>
+              </tr>
+              <tr>
+                <td>09/03/2025</td>
+                <td>ד"ר ישראלי</td>
+                <td>תזכורת - הגשת עבודות לקורס שיטות מחקר</td>
+                <td><button class="btn btn-primary btn-sm">צפייה</button></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="sidebar">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">
+              <div class="card-title-icon">⚡</div>
+              גישה מהירה
+            </div>
+          </div>
+          <div class="card-body">
+                            <div class="icon-grid">
+              <div class="icon-item">
+                <div class="icon">📚</div>
+                <span class="icon-text">ספרייה</span>
+              </div>
+              <div class="icon-item">
+                <div class="icon">📝</div>
+                <span class="icon-text">בחינות</span>
+              </div>
+              <div class="icon-item">
+                <div class="icon">📅</div>
+                <span class="icon-text">לוח שנה</span>
+              </div>
+              <div class="icon-item">
+                <div class="icon">💰</div>
+                <span class="icon-text">תשלומים</span>
+              </div>
+              <div class="icon-item">
+                <div class="icon">📊</div>
+                <span class="icon-text">ציונים</span>
+              </div>
+              <div class="icon-item">
+                <div class="icon">👥</div>
+                <span class="icon-text">סגל</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">
+              <div class="card-title-icon">📊</div>
+              התקדמות סמסטר
+            </div>
+          </div>
+          <div class="card-body">
+            <div style="margin-bottom: 1.5rem;">
+              <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                <span style="font-weight: 500;">סמסטר אביב 2025</span>
+                <span>65%</span>
+              </div>
+              <div class="progress-bar">
+                <div class="progress-value" style="width: 65%;"></div>
+              </div>
+            </div>
+            <div style="display: flex; justify-content: space-between; color: var(--gray-dark); font-size: 0.85rem;">
+              <span>תאריך התחלה: 02/01/2025</span>
+              <span>תאריך סיום: 15/05/2025</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">
+              <div class="card-title-icon">📅</div>
+              אירועים קרובים
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="calendar-item">
+              <div class="calendar-date" style="background-color: var(--primary);">
+                <span class="calendar-day">15</span>
+                <span class="calendar-month">מרץ</span>
+              </div>
+              <div class="calendar-content">
+                <h4>כנס חדשנות בהייטק</h4>
+                <p>10:00-16:00 | אולם כנסים מרכזי</p>
+              </div>
+            </div>
+            <div class="calendar-item">
+              <div class="calendar-date">
+                <span class="calendar-day">20</span>
+                <span class="calendar-month">מרץ</span>
+              </div>
+              <div class="calendar-content">
+                <h4>יריד תעסוקה</h4>
+                <p>12:00-17:00 | רחבת הקמפוס</p>
+              </div>
+            </div>
+            <div class="calendar-item">
+              <div class="calendar-date">
+                <span class="calendar-day">25</span>
+                <span class="calendar-month">מרץ</span>
+              </div>
+              <div class="calendar-content">
+                <h4>הרצאת אורח: חדשנות בתעשייה</h4>
+                <p>18:00-20:00 | אולם 405, בניין 3</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">
+              <div class="card-title-icon">🔍</div>
+              חיפוש מהיר
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="search-bar">
+              <input type="text" placeholder="חיפוש...">
+              <span class="search-icon">🔍</span>
+            </div>
+            <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.75rem;">
+              <button class="btn btn-sm" style="background-color: var(--gray-light); color: var(--gray-dark);">מערכת שעות</button>
+              <button class="btn btn-sm" style="background-color: var(--gray-light); color: var(--gray-dark);">לוח בחינות</button>
+              <button class="btn btn-sm" style="background-color: var(--gray-light); color: var(--gray-dark);">שכר לימוד</button>
+              <button class="btn btn-sm" style="background-color: var(--gray-light); color: var(--gray-dark);">אישורי לימודים</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>© 2025 הקריה האקדמית אונו | כל הזכויות שמורות</p>
+    <div class="footer-links">
+      <a href="#">צור קשר</a>
+      <a href="#">מדיניות פרטיות</a>
+      <a href="#">תקנון</a>
+      <a href="#">נגישות</a>
+      <a href="#">מוקד תמיכה: 054-9696680</a>
+    </div>
+  </footer>
+</body>
+</html>

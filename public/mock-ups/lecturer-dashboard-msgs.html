@@ -1,0 +1,1235 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ONO Academic College - Message Management</title>
+  <style>
+    :root {
+      --primary: #508e38;
+      --primary-light: #76b159;
+      --primary-dark: #3c6c29;
+      --secondary: #3563cf;
+      --secondary-light: #5178d8;
+      --secondary-dark: #2a4ea6;
+      --accent: #e74c3c;
+      --light: #f8f9fa;
+      --dark: #212529;
+      --gray: #6c757d;
+      --gray-light: #e9ecef;
+      --gray-dark: #495057;
+      --warning: #f39c12;
+      --danger: #dc3545;
+      --success: #28a745;
+      --info: #17a2b8;
+      --bg-white: #ffffff;
+      --border-color: #dee2e6;
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.1);
+      --shadow: 0 4px 6px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.12);
+      --shadow-lg: 0 10px 15px rgba(0,0,0,0.1), 0 4px 6px rgba(0,0,0,0.08);
+      --radius: 6px;
+      --radius-lg: 10px;
+      --transition: all 0.25s ease;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
+    }
+
+    body {
+      background-color: var(--light);
+      color: var(--dark);
+      line-height: 1.6;
+      font-size: 16px;
+    }
+
+    a {
+      text-decoration: none;
+      color: var(--secondary);
+      font-weight: 500;
+    }
+
+    header {
+      background-color: white;
+      box-shadow: var(--shadow);
+      padding: 0.75rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .logo {
+      height: 50px;
+    }
+
+    .user-menu {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.5rem 0.75rem;
+      border-radius: var(--radius);
+      transition: var(--transition);
+      cursor: pointer;
+    }
+
+    .user-avatar {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background-color: var(--secondary);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+
+    .user-details {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .user-name {
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    .user-role {
+      font-size: 0.8rem;
+      color: var(--gray);
+    }
+
+    .icon-button {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: var(--transition);
+      position: relative;
+      background-color: transparent;
+    }
+
+    .icon-button:hover {
+      background-color: var(--gray-light);
+    }
+
+    nav {
+      background-color: white;
+      padding: 0 2rem;
+      border-bottom: 1px solid var(--gray-light);
+    }
+
+    .nav-container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 0.5rem;
+      overflow-x: auto;
+      padding: 0.5rem 0;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--dark);
+      font-weight: 500;
+      padding: 0.75rem 1rem;
+      display: block;
+      border-radius: var(--radius);
+      transition: var(--transition);
+      white-space: nowrap;
+    }
+
+    .nav-links a:hover {
+      background-color: var(--gray-light);
+      color: var(--primary);
+    }
+
+    .nav-links a.active {
+      background-color: var(--primary-light);
+      color: var(--primary-dark);
+    }
+
+    main {
+      padding: 2rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .breadcrumbs {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1.25rem;
+      color: var(--gray);
+      font-size: 0.95rem;
+      align-items: center;
+      background-color: var(--bg-white);
+      padding: 0.75rem 1rem;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .breadcrumbs a {
+      color: var(--secondary);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .breadcrumbs a:hover {
+      color: var(--primary);
+      text-decoration: underline;
+    }
+
+    .page-header {
+      margin-bottom: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .page-title {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--dark);
+      border-bottom: 3px solid var(--primary);
+      padding-bottom: 0.5rem;
+      display: inline-block;
+    }
+
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 2rem;
+    }
+
+    .sidebar {
+      grid-column: 1;
+    }
+
+    .main-content {
+      grid-column: 2;
+    }
+
+    .card {
+      background-color: var(--bg-white);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      margin-bottom: 1.5rem;
+      transition: var(--transition);
+      border: 1px solid var(--border-color);
+    }
+
+    .card:hover {
+      box-shadow: var(--shadow-lg);
+    }
+
+    .card-header {
+      padding: 1.25rem;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: white;
+    }
+
+    .card-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .card-body {
+      padding: 1.5rem;
+    }
+
+    .btn {
+      padding: 0.6rem 1.25rem;
+      border: none;
+      border-radius: var(--radius);
+      cursor: pointer;
+      font-weight: 500;
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.95rem;
+    }
+
+    .btn-primary {
+      background-color: var(--primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background-color: var(--primary-dark);
+    }
+
+    .btn-secondary {
+      background-color: var(--secondary);
+      color: white;
+    }
+
+    .btn-secondary:hover {
+      background-color: var(--secondary-dark);
+    }
+
+    .btn-outline {
+      background-color: transparent;
+      border: 1px solid var(--primary);
+      color: var(--primary);
+    }
+
+    .btn-outline:hover {
+      background-color: var(--primary);
+      color: white;
+    }
+
+    .btn-danger {
+      background-color: var(--danger);
+      color: white;
+    }
+
+    .btn-danger:hover {
+      background-color: #bd2130;
+    }
+
+    .btn-sm {
+      padding: 0.4rem 0.75rem;
+      font-size: 0.85rem;
+    }
+
+    .sidebar-nav {
+      list-style: none;
+    }
+
+    .sidebar-nav li {
+      margin-bottom: 0.5rem;
+    }
+
+    .sidebar-nav a {
+      display: flex;
+      padding: 0.75rem 1rem;
+      border-radius: var(--radius);
+      color: var(--dark);
+      font-weight: 500;
+      transition: var(--transition);
+      align-items: center;
+      gap: 0.75rem;
+      border-right: 3px solid transparent;
+    }
+
+    .sidebar-nav a:hover {
+      background-color: var(--gray-light);
+      color: var(--primary);
+    }
+
+    .sidebar-nav a.active {
+      background-color: var(--primary-light);
+      color: var(--primary-dark);
+      font-weight: 600;
+      border-right: 3px solid var(--primary);
+    }
+
+    .sidebar-nav-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 24px;
+      height: 24px;
+    }
+
+    .section-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      color: var(--dark);
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1.25rem;
+      margin-bottom: 2rem;
+    }
+
+    .stat-card {
+      background: white;
+      padding: 1.25rem;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      transition: var(--transition);
+      border: 1px solid var(--border-color);
+    }
+
+    .stat-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow);
+    }
+
+    .stat-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+    }
+
+    .stat-primary {
+      background-color: rgba(106, 176, 76, 0.15);
+      color: var(--primary-dark);
+    }
+
+    .stat-info {
+      background-color: rgba(75, 123, 236, 0.15);
+      color: var(--secondary-dark);
+    }
+
+    .stat-warning {
+      background-color: rgba(240, 147, 43, 0.15);
+      color: var(--warning);
+    }
+
+    .stat-danger {
+      background-color: rgba(235, 77, 75, 0.15);
+      color: var(--danger);
+    }
+
+    .stat-content {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .stat-value {
+      font-size: 1.5rem;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    .stat-label {
+      font-size: 0.85rem;
+      color: var(--gray);
+    }
+
+    .counter-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 20px;
+      height: 20px;
+      padding: 0 6px;
+      border-radius: 10px;
+      background-color: var(--primary);
+      color: white;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.35rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .status-active {
+      background-color: rgba(40, 167, 69, 0.15);
+      color: var(--success);
+    }
+
+    .status-draft {
+      background-color: rgba(75, 123, 236, 0.15);
+      color: var(--secondary-dark);
+    }
+
+    .status-scheduled {
+      background-color: rgba(240, 147, 43, 0.15);
+      color: var(--warning);
+    }
+
+    .status-inactive {
+      background-color: rgba(108, 117, 125, 0.15);
+      color: var(--gray);
+    }
+
+    .status-pinned {
+      background-color: rgba(220, 53, 69, 0.15);
+      color: var(--danger);
+    }
+
+    .search-bar {
+      position: relative;
+      margin-bottom: 1.5rem;
+    }
+
+    .search-bar input {
+      width: 100%;
+      padding: 0.75rem 1rem 0.75rem 2.5rem;
+      border: 1px solid var(--gray-light);
+      border-radius: var(--radius);
+      font-size: 0.95rem;
+      transition: var(--transition);
+    }
+
+    .search-bar input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(106, 176, 76, 0.15);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 0.75rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--gray);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      padding: 0.75rem 1rem;
+      text-align: right;
+    }
+
+    th {
+      background-color: var(--gray-light);
+      font-weight: 600;
+      color: var(--gray-dark);
+    }
+
+    tr {
+      border-bottom: 1px solid var(--gray-light);
+    }
+
+    tr:last-child {
+      border-bottom: none;
+    }
+
+    tr:hover {
+      background-color: #f8f9fa;
+    }
+
+    .message-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .message-card {
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      overflow: hidden;
+      background-color: var(--bg-white);
+      transition: var(--transition);
+    }
+
+    .message-card:hover {
+      box-shadow: var(--shadow);
+    }
+
+    .message-header {
+      padding: 1rem 1.25rem;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #f8f9fa;
+    }
+
+    .message-header-left {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .message-title {
+      font-weight: 600;
+      font-size: 1.1rem;
+    }
+
+    .message-meta {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      color: var(--gray);
+      font-size: 0.9rem;
+    }
+
+    .message-body {
+      padding: 1.25rem;
+    }
+
+    .message-footer {
+      padding: 0.75rem 1.25rem;
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #f8f9fa;
+    }
+
+    .message-stats {
+      display: flex;
+      gap: 1.5rem;
+      color: var(--gray-dark);
+      font-size: 0.9rem;
+    }
+
+    .message-stat {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .message-actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .tab-container {
+      margin-bottom: 1.5rem;
+    }
+
+    .tab-header {
+      display: flex;
+      border-bottom: 1px solid var(--border-color);
+      margin-bottom: 1.5rem;
+    }
+
+    .tab-item {
+      padding: 0.75rem 1.5rem;
+      cursor: pointer;
+      border-bottom: 3px solid transparent;
+      font-weight: 500;
+      transition: var(--transition);
+    }
+
+    .tab-item.active {
+      border-bottom-color: var(--primary);
+      color: var(--primary-dark);
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    .filter-container {
+      display: flex;
+      margin-bottom: 1.5rem;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .filter-button {
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-size: 0.95rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: var(--transition);
+      background-color: var(--gray-light);
+      color: var(--gray-dark);
+      border: none;
+    }
+
+    .filter-button.active {
+      background-color: var(--primary);
+      color: white;
+    }
+
+    .filter-button:hover:not(.active) {
+      background-color: var(--gray);
+      color: white;
+    }
+
+    .attachment-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.25rem 0.5rem;
+      background-color: var(--gray-light);
+      border-radius: 4px;
+      font-size: 0.85rem;
+      color: var(--gray-dark);
+    }
+
+    .pagination {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-top: 2rem;
+    }
+
+    .pagination-item {
+      min-width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--radius);
+      background-color: white;
+      border: 1px solid var(--border-color);
+      color: var(--dark);
+      font-weight: 500;
+      transition: var(--transition);
+      cursor: pointer;
+    }
+
+    .pagination-item:hover {
+      background-color: var(--gray-light);
+    }
+
+    .pagination-item.active {
+      background-color: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+
+    .pagination-item.disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    @media (max-width: 1024px) {
+      .dashboard-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        grid-column: 1;
+        grid-row: 1;
+      }
+
+      .main-content {
+        grid-column: 1;
+        grid-row: 2;
+      }
+
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo-container">
+      <img src="/api/placeholder/150/50" alt="Ono Academic College Logo" class="logo" />
+    </div>
+    <div class="user-menu">
+      <div class="icon-button">
+        <span>🔔</span>
+      </div>
+      <div class="user-info">
+        <div class="user-avatar">ל</div>
+        <div class="user-details">
+          <span class="user-name">ד"ר ערב טוב</span>
+          <span class="user-role">מרצה</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <nav>
+    <div class="nav-container">
+      <ul class="nav-links">
+        <li><a href="#">לוח בקרה</a></li>
+        <li><a href="#" class="active">ניהול קורסים</a></li>
+        <li><a href="#">בחינות וציונים</a></li>
+        <li><a href="#">פניות סטודנטים</a></li>
+        <li><a href="#">לוח זמנים</a></li>
+        <li><a href="#">מצגות ומסמכים</a></li>
+        <li><a href="#">מערכת שעות</a></li>
+        <li><a href="#">הגדרות</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+    <div class="breadcrumbs">
+      <a href="#">ראשי</a>
+      <span>›</span>
+      <a href="#">ניהול קורסים</a>
+      <span>›</span>
+      <a href="#">פרויקט מסכם FE</a>
+      <span>›</span>
+      <span>ניהול הודעות</span>
+    </div>
+
+    <div class="page-header">
+      <h1 class="page-title">
+        ניהול הודעות קורס
+      </h1>
+      <button class="btn btn-primary">
+        <span>➕</span>
+        <span>יצירת הודעה חדשה</span>
+      </button>
+    </div>
+
+    <div class="dashboard-grid">
+      <div class="sidebar">
+        <div class="search-bar">
+          <input type="text" placeholder="חיפוש הודעות...">
+          <span class="search-icon">🔍</span>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">
+              <span style="display: flex; align-items: center; gap: 0.5rem;">
+                <span style="background-color: var(--primary); color: white; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold;">📋</span>
+                ניהול קורס
+              </span>
+            </div>
+          </div>
+          <div class="card-body" style="padding: 0.75rem 0;">
+            <ul class="sidebar-nav">
+              <li>
+                <a href="#">
+                  <span class="sidebar-nav-icon">📊</span>
+                  <span>סקירה כללית</span>
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  <span class="sidebar-nav-icon">👥</span>
+                  <span>רשימת סטודנטים</span>
+                  <span style="margin-right: auto;" class="counter-badge">26</span>
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  <span class="sidebar-nav-icon">📝</span>
+                  <span>ניהול מטלות</span>
+                  <span style="margin-right: auto;" class="counter-badge">4</span>
+                </a>
+              </li>
+              <li>
+                <a href="#" class="active">
+                  <span class="sidebar-nav-icon">📢</span>
+                  <span>הודעות</span>
+                  <span style="margin-right: auto;" class="counter-badge">12</span>
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  <span class="sidebar-nav-icon">📚</span>
+                  <span>חומרי לימוד</span>
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  <span class="sidebar-nav-icon">📊</span>
+                  <span>ציונים</span>
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  <span class="sidebar-nav-icon">⚙️</span>
+                  <span>הגדרות קורס</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">
+              <span style="display: flex; align-items: center; gap: 0.5rem;">
+                <span style="background-color: var(--info); color: white; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold;">📊</span>
+                סטטיסטיקות הודעות
+              </span>
+            </div>
+          </div>
+          <div class="card-body">
+            <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+              <div style="display: flex; justify-content: space-between;">
+                <span style="color: var(--gray-dark);">סך כל ההודעות:</span>
+                <span style="font-weight: 500;">12</span>
+              </div>
+              <div style="display: flex; justify-content: space-between;">
+                <span style="color: var(--gray-dark);">הודעות מהחודש האחרון:</span>
+                <span style="font-weight: 500;">5</span>
+              </div>
+              <div style="display: flex; justify-content: space-between;">
+                <span style="color: var(--gray-dark);">הודעות נעוצות:</span>
+                <span style="font-weight: 500;">1</span>
+              </div>
+              <div style="display: flex; justify-content: space-between;">
+                <span style="color: var(--gray-dark);">הודעות עם קבצים:</span>
+                <span style="font-weight: 500;">8</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; border-top: 1px solid var(--gray-light); padding-top: 0.75rem; margin-top: 0.5rem;">
+                <span style="color: var(--gray-dark);">אחוז צפייה ממוצע:</span>
+                <span style="font-weight: 500;">78%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="main-content">
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon stat-primary">📢</div>
+            <div class="stat-content">
+              <div class="stat-value">12</div>
+              <div class="stat-label">הודעות פעילות</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon stat-info">📊</div>
+            <div class="stat-content">
+              <div class="stat-value">78%</div>
+              <div class="stat-label">אחוז צפייה ממוצע</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon stat-warning">⏰</div>
+            <div class="stat-content">
+              <div class="stat-value">2</div>
+              <div class="stat-label">הודעות מתוזמנות</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon stat-danger">📌</div>
+            <div class="stat-content">
+              <div class="stat-value">1</div>
+              <div class="stat-label">הודעות נעוצות</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="filter-container">
+          <button class="filter-button active">כל ההודעות (12)</button>
+          <button class="filter-button">החודש האחרון (5)</button>
+          <button class="filter-button">מתוזמנות (2)</button>
+          <button class="filter-button">נעוצות (1)</button>
+          <button class="filter-button">טיוטות (2)</button>
+        </div>
+
+        <div class="message-list">
+          <!-- Pinned Message -->
+          <div class="message-card">
+            <div class="message-header">
+              <div class="message-header-left">
+                <span style="color: var(--danger); font-size: 1.2rem;">📌</span>
+                <div>
+                  <div class="message-title">שגיאה נפוצה בעת ביצוע commit & push</div>
+                  <div class="message-meta">
+                    <span>11/03/2025</span>
+                    <span>•</span>
+                    <span class="status-badge status-pinned">נעוץ</span>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <span class="attachment-badge">
+                  <span>📎</span>
+                  <span>1 קובץ מצורף</span>
+                </span>
+              </div>
+            </div>
+            <div class="message-body">
+              <p>ראו שגיאה נפוצה בקובץ המצורף.</p>
+              <p>על מנת לפתור את השגיאה יש לבדוק את שתי הפקודות הבאות. יש להריץ כל פקודה בנפרד. יש לבדוק בקפידה אם הפקודה הוזנה נכון או שכם.</p>
+              <pre style="background-color: #f5f5f5; padding: 0.75rem; border-radius: 4px; margin-top: 0.75rem; overflow-x: auto; font-size: 0.9rem;">
+git config --global user.email "you@example.com"
+git config --global user.name "Your Name"
+              </pre>
+            </div>
+            <div class="message-footer">
+              <div class="message-stats">
+                <div class="message-stat">
+                  <span>👁️</span>
+                  <span>נצפה ע"י 24 סטודנטים (92%)</span>
+                </div>
+                <div class="message-stat">
+                  <span>💬</span>
+                  <span>2 תגובות</span>
+                </div>
+              </div>
+              <div class="message-actions">
+                <button class="btn btn-sm btn-outline">
+                  <span>עריכה</span>
+                </button>
+                <button class="btn btn-sm btn-outline" style="border-color: var(--danger); color: var(--danger);">
+                  <span>הסרת נעיצה</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Recent Message -->
+          <div class="message-card">
+            <div class="message-header">
+              <div class="message-header-left">
+                <div>
+                  <div class="message-title">לקראת שיעור 2 - הקמת פרויקט פרונטאנד חדש</div>
+                  <div class="message-meta">
+                    <span>10/03/2025</span>
+                    <span>•</span>
+                    <span class="status-badge status-active">פורסם</span>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <span class="attachment-badge">
+                  <span>📎</span>
+                  <span>2 קבצים מצורפים</span>
+                </span>
+              </div>
+            </div>
+            <div class="message-body">
+              <p>ערב טוב.</p>
+              <p>מחר בשיעור נדבר בנושאים הבאים:</p>
+              <ul>
+                <li>חזרה על שיעור 1 - מסמך תכנון, מדריך react & css</li>
+                <li>הקמת פרויקט חדש - שימוש ב github, vite, material ui</li>
+              </ul>
+              <p>בחלק האחרון של השיעור יהיה זמן לתרגול וכן הצגת פניות.</p>
+              <p><strong>שימו/ה לב שהנושא מלא שורות לכל הסרטים (אין לכם מה לבצע ידי סטודנטים במהלך המרץ).</strong></p>
+              <p>עלינו לאחר הקורס מצגת התקנות נדרשות. מומלץ לבצע לפני תחילת השיעור. ניתן גם לבצע בזמן התרגול.</p>
+            </div>
+            <div class="message-footer">
+              <div class="message-stats">
+                <div class="message-stat">
+                  <span>👁️</span>
+                  <span>נצפה ע"י 21 סטודנטים (81%)</span>
+                </div>
+                <div class="message-stat">
+                  <span>💬</span>
+                  <span>4 תגובות</span>
+                </div>
+              </div>
+              <div class="message-actions">
+                <button class="btn btn-sm btn-outline">
+                  <span>עריכה</span>
+                </button>
+                <button class="btn btn-sm btn-outline">
+                  <span>נעיצה</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Scheduled Message -->
+          <div class="message-card">
+            <div class="message-header">
+              <div class="message-header-left">
+                <div>
+                  <div class="message-title">תזכורת: מועד הגשה מתקרב - מדריך React & CSS</div>
+                  <div class="message-meta">
+                    <span>מתוזמן ל-15/03/2025, 09:00</span>
+                    <span>•</span>
+                    <span class="status-badge status-scheduled">מתוזמן</span>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <span class="attachment-badge">
+                  <span>📎</span>
+                  <span>ללא קבצים</span>
+                </span>
+              </div>
+            </div>
+            <div class="message-body">
+              <p>שלום לכולם,</p>
+              <p>זוהי תזכורת ידידותית שמועד ההגשה של מטלת "מדריך React & CSS" מתקרב!</p>
+              <p>נא להגיש את המטלה עד לתאריך <strong>18/03/2025, 09:00</strong>.</p>
+              <p>אם יש לכם שאלות או אתם זקוקים לעזרה, אל תהססו לפנות אלי או לחבריכם לכיתה בפורום הקורס.</p>
+              <p>בהצלחה!</p>
+            </div>
+            <div class="message-footer">
+              <div class="message-stats">
+                <div class="message-stat">
+                  <span>⏰</span>
+                  <span>יפורסם בעוד 3 ימים</span>
+                </div>
+              </div>
+              <div class="message-actions">
+                <button class="btn btn-sm btn-outline">
+                  <span>עריכה</span>
+                </button>
+                <button class="btn btn-sm btn-outline" style="border-color: var(--warning); color: var(--warning);">
+                  <span>ביטול תזמון</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Draft Message -->
+          <div class="message-card">
+            <div class="message-header">
+              <div class="message-header-left">
+                <div>
+                  <div class="message-title">הודעה על שינוי בהרכב הציון הסופי</div>
+                  <div class="message-meta">
+                    <span>עודכן 09/03/2025</span>
+                    <span>•</span>
+                    <span class="status-badge status-draft">טיוטה</span>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <span class="attachment-badge">
+                  <span>📎</span>
+                  <span>ללא קבצים</span>
+                </span>
+              </div>
+            </div>
+            <div class="message-body">
+              <p>סטודנטים יקרים,</p>
+              <p>אני מבקש לעדכן על שינוי בהרכב הציון הסופי של הקורס.</p>
+              <p>בעקבות דיונים ובקשות שהגיעו, הוחלט כי...</p>
+              <p>[להשלים את פרטי השינוי]</p>
+            </div>
+            <div class="message-footer">
+              <div class="message-stats">
+                <div class="message-stat">
+                  <span>✏️</span>
+                  <span>טיוטה - לא פורסם</span>
+                </div>
+              </div>
+              <div class="message-actions">
+                <button class="btn btn-sm btn-outline">
+                  <span>המשך עריכה</span>
+                </button>
+                <button class="btn btn-sm btn-primary">
+                  <span>פרסום</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Older Message -->
+          <div class="message-card">
+            <div class="message-header">
+              <div class="message-header-left">
+                <div>
+                  <div class="message-title">הגשה - תכנון פרוייקט</div>
+                  <div class="message-meta">
+                    <span>04/03/2025</span>
+                    <span>•</span>
+                    <span class="status-badge status-active">פורסם</span>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <span class="attachment-badge">
+                  <span>📎</span>
+                  <span>ללא קבצים</span>
+                </span>
+              </div>
+            </div>
+            <div class="message-body">
+              <p>ערב טוב.</p>
+              <p>הנושא המרכזי לפרוייקט הוא שיפור מערכת המידע לסטודנטים לאחר שיעור מעמיק בנושא בשיעורים הבאים.</p>
+              <p>בכניסה ל"נושאים לפרוייקט" יש פירוט על כל אחד מהנושאים.</p>
+              <p>יש לבחור את אחד הנושאים, ועל פינו לעצב מערכת במסגרת עבודת תכנון הפרוייקט.</p>
+              <h4 style="margin-top: 1rem; font-size: 1.1rem;">שיעורי הודעות:</h4>
+              <ul>
+                <li>שיעור עמוד הבית</li>
+                <li>שיעור הודעות</li>
+                <li>הזמנות מהמערכת</li>
+              </ul>
+            </div>
+            <div class="message-footer">
+              <div class="message-stats">
+                <div class="message-stat">
+                  <span>👁️</span>
+                  <span>נצפה ע"י 26 סטודנטים (100%)</span>
+                </div>
+                <div class="message-stat">
+                  <span>💬</span>
+                  <span>7 תגובות</span>
+                </div>
+              </div>
+              <div class="message-actions">
+                <button class="btn btn-sm btn-outline">
+                  <span>עריכה</span>
+                </button>
+                <button class="btn btn-sm btn-outline">
+                  <span>נעיצה</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="pagination">
+          <div class="pagination-item">
+            <span>«</span>
+          </div>
+          <div class="pagination-item active">
+            <span>1</span>
+          </div>
+          <div class="pagination-item">
+            <span>2</span>
+          </div>
+          <div class="pagination-item">
+            <span>3</span>
+          </div>
+          <div class="pagination-item">
+            <span>»</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</body>
+</html>

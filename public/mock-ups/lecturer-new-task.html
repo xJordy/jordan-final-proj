@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ONO Academic College - New Task Modal</title>
+  <style>
+    /* Modal Styles */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal-container {
+      background-color: white;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg);
+      max-width: 800px;
+      width: 90%;
+      max-height: 90vh;
+      overflow-y: auto;
+      position: relative;
+      transform: translateY(-20px);
+      transition: all 0.3s ease;
+    }
+
+    .modal-overlay.active .modal-container {
+      transform: translateY(0);
+    }
+
+    .modal-header {
+      padding: 1.25rem 1.5rem;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      background-color: white;
+      z-index: 10;
+      border-top-left-radius: var(--radius-lg);
+      border-top-right-radius: var(--radius-lg);
+    }
+
+    .modal-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .modal-close {
+      background: transparent;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      transition: var(--transition);
+    }
+
+    .modal-close:hover {
+      background-color: var(--gray-light);
+    }
+
+    .modal-body {
+      padding: 1.5rem;
+    }
+
+    .modal-footer {
+      padding: 1rem 1.5rem;
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      justify-content: flex-end;
+      gap: 1rem;
+      position: sticky;
+      bottom: 0;
+      background-color: white;
+      z-index: 10;
+      border-bottom-left-radius: var(--radius-lg);
+      border-bottom-right-radius: var(--radius-lg);
+    }
+
+    /* Existing Page Styles */
+    :root {
+      --primary: #508e38;
+      --primary-light: #76b159;
+      --primary-dark: #3c6c29;
+      --secondary: #3563cf;
+      --secondary-light: #5178d8;
+      --secondary-dark: #2a4ea6;
+      --accent: #e74c3c;
+      --light: #f8f9fa;
+      --dark: #212529;
+      --gray: #6c757d;
+      --gray-light: #e9ecef;
+      --gray-dark: #495057;
+      --warning: #f39c12;
+      --danger: #dc3545;
+      --success: #28a745;
+      --info: #17a2b8;
+      --bg-white: #ffffff;
+      --border-color: #dee2e6;
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.1);
+      --shadow: 0 4px 6px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.12);
+      --shadow-lg: 0 10px 15px rgba(0,0,0,0.1), 0 4px 6px rgba(0,0,0,0.08);
+      --radius: 6px;
+      --radius-lg: 10px;
+      --transition: all 0.25s ease;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
+    }
+
+    body {
+      background-color: var(--light);
+      color: var(--dark);
+      line-height: 1.6;
+      font-size: 16px;
+    }
+
+    .btn {
+      padding: 0.6rem 1.25rem;
+      border: none;
+      border-radius: var(--radius);
+      cursor: pointer;
+      font-weight: 500;
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.95rem;
+    }
+
+    .btn-primary {
+      background-color: var(--primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background-color: var(--primary-dark);
+    }
+
+    .btn-outline {
+      background-color: transparent;
+      border: 1px solid var(--primary);
+      color: var(--primary);
+    }
+
+    .btn-outline:hover {
+      background-color: var(--primary);
+      color: white;
+    }
+
+    .form-group {
+      margin-bottom: 1rem;
+    }
+
+    .form-label {
+      display: block;
+      margin-bottom: 0.375rem;
+      font-weight: 500;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 0.675rem 1rem;
+      border: 1px solid var(--gray-light);
+      border-radius: var(--radius);
+      font-size: 1rem;
+      transition: var(--transition);
+    }
+
+    .form-control:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(106, 176, 76, 0.15);
+    }
+
+    textarea.form-control {
+      min-height: 80px;
+      resize: vertical;
+    }
+
+    .form-text {
+      margin-top: 0.25rem;
+      font-size: 0.85rem;
+      color: var(--gray);
+    }
+
+    .form-select {
+      width: 100%;
+      padding: 0.675rem 1rem;
+      border: 1px solid var(--gray-light);
+      border-radius: var(--radius);
+      font-size: 1rem;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%236c757d' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: left 0.75rem center;
+      background-size: 16px 12px;
+    }
+
+    .form-select:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(106, 176, 76, 0.15);
+    }
+    
+    .form-check {
+      display: flex;
+      align-items: center;
+      margin-bottom: 0.5rem;
+    }
+
+    .form-check-input {
+      width: 18px;
+      height: 18px;
+      margin-left: 0.75rem;
+      accent-color: var(--primary);
+    }
+
+    .form-check-label {
+      margin-bottom: 0;
+    }
+
+    .upload-area {
+      border: 2px dashed var(--gray-light);
+      border-radius: var(--radius);
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 1rem;
+      text-align: center;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .upload-area:hover {
+      border-color: var(--primary);
+      background-color: rgba(80, 142, 56, 0.05);
+    }
+
+    .upload-icon {
+      font-size: 2rem;
+      color: var(--primary-light);
+      margin-bottom: 0.5rem;
+    }
+
+    .upload-text {
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+    }
+
+    .upload-hint {
+      font-size: 0.85rem;
+      color: var(--gray);
+    }
+
+    .file-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.75rem;
+      background-color: #f1f3f5;
+      border-radius: var(--radius);
+      margin-bottom: 0.5rem;
+    }
+
+    .file-icon {
+      font-size: 1.25rem;
+      color: var(--gray);
+    }
+
+    .file-info {
+      flex: 1;
+    }
+
+    .file-name {
+      font-weight: 500;
+      font-size: 0.95rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .file-meta {
+      font-size: 0.85rem;
+      color: var(--gray);
+    }
+
+    .file-actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .action-button {
+      background-color: transparent;
+      border: none;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .remove-btn {
+      color: var(--danger);
+    }
+
+    .remove-btn:hover {
+      background-color: rgba(235, 77, 75, 0.1);
+    }
+
+    .date-input-group {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .date-input-group .form-control {
+      flex: 1;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .form-section {
+      margin-bottom: 1rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--gray-light);
+    }
+
+    .form-section-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: var(--primary-dark);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .demo-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 999;
+    }
+
+    @media (max-width: 768px) {
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Demo Button (For demonstration purposes - remove in production) -->
+  <button class="btn btn-primary demo-btn" onclick="openModal()">פתח חלון הוספת מטלה</button>
+
+  <!-- Modal Overlay -->
+  <div class="modal-overlay" id="taskModal">
+    <div class="modal-container">
+      <div class="modal-header">
+        <div class="modal-title">
+          <span style="background-color: var(--primary); color: white; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">➕</span>
+          הוספת מטלה חדשה
+        </div>
+        <button class="modal-close" onclick="closeModal()">×</button>
+      </div>
+      
+      <div class="modal-body">
+        <form id="newTaskForm">
+          <!-- Basic Task Information -->
+          <div class="form-section">
+            <div class="form-section-title">
+              <span>📝</span>
+              פרטי המטלה
+            </div>
+            
+            <div class="form-group">
+              <label for="taskName" class="form-label">שם המטלה *</label>
+              <input type="text" id="taskName" class="form-control" placeholder="הזן שם למטלה" required>
+            </div>
+            
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="taskCategory" class="form-label">קטגוריה</label>
+                <select id="taskCategory" class="form-select">
+                  <option value="project">פרויקט</option>
+                  <option value="exercise">תרגיל</option>
+                  <option value="quiz">בוחן</option>
+                  <option value="assignment">משימה</option>
+                  <option value="other">אחר</option>
+                </select>
+              </div>
+              
+              <div class="form-group">
+                <label for="taskWeight" class="form-label">משקל בציון הסופי (%)</label>
+                <input type="number" id="taskWeight" class="form-control" min="0" max="100" value="20">
+              </div>
+            </div>
+            
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="taskDueDate" class="form-label">תאריך יעד *</label>
+                <div class="date-input-group">
+                  <input type="date" id="taskDueDate" class="form-control" required>
+                  <input type="time" id="taskDueTime" class="form-control" value="23:59" required>
+                </div>
+              </div>
+              
+              <div class="form-group">
+                <label for="taskStatus" class="form-label">סטטוס</label>
+                <select id="taskStatus" class="form-select">
+                  <option value="draft">טיוטה - שמור להמשך עריכה</option>
+                  <option value="active">פעיל - פרסם לסטודנטים</option>
+                  <option value="scheduled">מתוזמן</option>
+                </select>
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label for="taskDescription" class="form-label">תיאור המטלה *</label>
+              <textarea id="taskDescription" class="form-control" placeholder="הזן תיאור של המטלה שיוצג לסטודנטים" required></textarea>
+            </div>
+          </div>
+          
+          <!-- Submission Settings -->
+          <div class="form-section">
+            <div class="form-section-title">
+              <span>📤</span>
+              הגדרות הגשה
+            </div>
+            
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="taskType" class="form-label">סוג הגשה</label>
+                <select id="taskType" class="form-select">
+                  <option value="file">הגשת קובץ</option>
+                  <option value="text">הגשת טקסט</option>
+                  <option value="link">הגשת קישור</option>
+                  <option value="mixed">הגשה מעורבת</option>
+                </select>
+              </div>
+              
+              <div class="form-group">
+                <label for="taskModule" class="form-label">שייך ליחידת לימוד</label>
+                <select id="taskModule" class="form-select">
+                  <option value="">בחר יחידת לימוד...</option>
+                  <option value="module1">יחידה 1 - הכנת תכנית עבודה</option>
+                  <option value="module2">יחידה 2 - יסודות הפרונטאנד</option>
+                  <option value="module3">יחידה 3 - מודלים ושיטות עבודה</option>
+                  <option value="module4">יחידה 4 - פיתוח ובדיקות</option>
+                </select>
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label class="form-label">קבצים מצורפים</label>
+              <div class="upload-area">
+                <div class="upload-icon">📂</div>
+                <div class="upload-text">לחץ כאן להעלאת קבצים</div>
+                <div class="upload-hint">צרף הנחיות, דוגמאות או תבניות לסטודנטים</div>
+                <div style="margin-top: 0.75rem;">
+                  <button type="button" class="btn btn-outline">בחירת קבצים</button>
+                </div>
+              </div>
+              
+              <div class="file-list">
+                <div class="file-item">
+                  <div class="file-icon">📄</div>
+                  <div class="file-info">
+                    <div class="file-name">הנחיות_להגשה.docx</div>
+                    <div class="file-meta">245KB • נבחר לפני רגע</div>
+                  </div>
+                  <div class="file-actions">
+                    <button type="button" class="action-button remove-btn">🗑️</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Additional Settings -->
+          <div class="form-section">
+            <div class="form-section-title">
+              <span>⚙️</span>
+              הגדרות נוספות
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+              <div>
+                <div class="form-check">
+                  <input type="checkbox" id="allowGroups" class="form-check-input">
+                  <label for="allowGroups" class="form-check-label">אפשר הגשה בקבוצות</label>
+                </div>
+                
+                <div class="form-check">
+                  <input type="checkbox" id="showGrade" class="form-check-input">
+                  <label for="showGrade" class="form-check-label">הצג ציון מיד לאחר הבדיקה</label>
+                </div>
+                
+                <div class="form-check">
+                  <input type="checkbox" id="allowLate" class="form-check-input">
+                  <label for="allowLate" class="form-check-label">אפשר הגשה מאוחרת</label>
+                </div>
+                
+                <div class="form-check">
+                  <input type="checkbox" id="notifyPublish" class="form-check-input" checked>
+                  <label for="notifyPublish" class="form-check-label">שלח התראה בעת פרסום</label>
+                </div>
+              </div>
+              
+              <div>
+                <div class="form-check">
+                  <input type="checkbox" id="limitFileTypes" class="form-check-input">
+                  <label for="limitFileTypes" class="form-check-label">הגבל סוגי קבצים</label>
+                </div>
+                
+                <div class="form-check">
+                  <input type="checkbox" id="limitFileSize" class="form-check-input">
+                  <label for="limitFileSize" class="form-check-label">הגבל גודל קובץ</label>
+                </div>
+                
+                <div class="form-check">
+                  <input type="checkbox" id="useRubric" class="form-check-input">
+                  <label for="useRubric" class="form-check-label">צרף מחוון לבדיקה</label>
+                </div>
+                
+                <div class="form-check">
+                  <input type="checkbox" id="notifyBeforeDue" class="form-check-input" checked>
+                  <label for="notifyBeforeDue" class="form-check-label">שלח תזכורת לפני מועד ההגשה</label>
+                </div>
+              </div>
+            </div>
+            
+            <div id="lateSubmissionSettings" style="margin-top: 1rem; display: none;">
+              <div class="form-grid">
+                <div class="form-group">
+                  <label class="form-label">הורדת נקודות</label>
+                  <div style="display: flex; align-items: center; gap: 0.5rem;">
+                    <input type="number" class="form-control" value="5" min="0" max="100" style="width: 70px;">
+                    <span style="font-weight: bold;">%</span>
+                    <span>לכל יום איחור</span>
+                  </div>
+                </div>
+                
+                <div class="form-group">
+                  <label class="form-label">תאריך סופי להגשה</label>
+                  <div class="date-input-group">
+                    <input type="date" class="form-control">
+                    <input type="time" class="form-control" value="23:59">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      
+      <div class="modal-footer">
+        <button class="btn btn-outline" onclick="closeModal()">ביטול</button>
+        <button class="btn btn-primary" onclick="saveTask()">שמירה ופרסום</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Open modal function
+    function openModal() {
+      document.getElementById('taskModal').classList.add('active');
+      document.body.style.overflow = 'hidden'; // Prevent scrolling behind modal
+    }
+    
+    // Close modal function
+    function closeModal() {
+      document.getElementById('taskModal').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+    
+    // Save task function (placeholder)
+    function saveTask() {
+      // Validate form
+      const form = document.getElementById('newTaskForm');
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+      
+      // Simulate saving
+      alert('המטלה נשמרה בהצלחה!');
+      closeModal();
+    }
+    
+    // Show/hide late submission settings
+    document.addEventListener('DOMContentLoaded', function() {
+      const allowLateCheckbox = document.getElementById('allowLate');
+      const lateSubmissionSettings = document.getElementById('lateSubmissionSettings');
+      
+      if (allowLateCheckbox && lateSubmissionSettings) {
+        allowLateCheckbox.addEventListener('change', function() {
+          lateSubmissionSettings.style.display = this.checked ? 'block' : 'none';
+        });
+      }
+    });
+  </script>
+</body>
+</html>
