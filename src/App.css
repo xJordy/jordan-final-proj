@@ -428,6 +428,7 @@
     outline: none;
     transition: var(--transition);
     font-size: 0.95rem;
+    background-color: transparent;
   }
   
   .search-bar input:focus {

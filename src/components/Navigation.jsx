@@ -1,16 +1,17 @@
 // components/Navigation.jsx
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 
 const Navigation = () => {
   const navLinks = [
-    { name: 'דף הבית', href: '#', active: true },
-    { name: 'מידע אישי', href: '#' },
-    { name: 'קורסים', href: '#' },
-    { name: 'מערכת שעות', href: '#' },
-    { name: 'בחינות וציונים', href: '#' },
-    { name: 'ספרייה', href: '#' },
-    { name: 'תשלומים', href: '#' },
-    { name: 'אירועים', href: '#' }
+    { name: 'דף הבית', path: '/', exact: true },
+    { name: 'מידע אישי', path: '/profile' },
+    { name: 'קורסים', path: '/courses' },
+    { name: 'מערכת שעות', path: '/schedule' },
+    { name: 'בחינות וציונים', path: '/exams' },
+    { name: 'ספרייה', path: '/library' },
+    { name: 'תשלומים', path: '/payments' },
+    { name: 'אירועים', path: '/events' }
   ];
 
   return (
@@ -19,12 +20,13 @@ const Navigation = () => {
         <ul className="nav-links">
           {navLinks.map((link, index) => (
             <li key={index}>
-              <a 
-                href={link.href} 
-                className={link.active ? 'active' : ''}
+              <NavLink 
+                to={link.path}
+                className={({ isActive }) => isActive ? 'active' : ''}
+                end={link.exact}
               >
                 {link.name}
-              </a>
+              </NavLink>
             </li>
           ))}
         </ul>
