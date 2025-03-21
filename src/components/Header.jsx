@@ -1,12 +1,13 @@
 // components/Header.jsx
 import React from 'react';
+import CollegeLogo from '../assets/CollegeLogo.png';
 
 const Header = () => {
   return (
     <header>
       <div className="logo-container">
         <img 
-          src="/api/placeholder/150/50" 
+          src={CollegeLogo} 
           alt="Ono Academic College Logo" 
           className="logo" 
         />
@@ -21,9 +22,9 @@ const Header = () => {
           <span className="notification-count">3</span>
         </div>
         <div className="user-info">
-          <div className="user-avatar">ט</div>
+          <div className="user-avatar">ר</div>
           <div className="user-details">
-            <span className="user-name">טל ישראלי</span>
+            <span className="user-name">ירדן דוד רום</span>
             <span className="user-role">סטודנט לתואר שני</span>
           </div>
         </div>

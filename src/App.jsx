@@ -6,6 +6,7 @@ import Header from './components/Header';
 import Navigation from './components/Navigation';
 import Dashboard from './components/Dashboard';
 import Footer from './components/Footer';
+import Breadcrumbs from './components/Breadcrumbs';
 
 // Import or create page components for each route
 // For example:
@@ -24,11 +25,7 @@ function App() {
         <Header />
         <Navigation />
         <main>
-          <div className="breadcrumbs">
-            <a href="#">ראשי</a>
-            <span>›</span>
-            <span>דף הבית</span>
-          </div>
+          <Breadcrumbs />
 
           <Routes>
             <Route path="/" element={
